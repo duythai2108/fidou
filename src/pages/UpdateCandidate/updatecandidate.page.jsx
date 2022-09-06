@@ -1,26 +1,30 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
-import Row from "../../components/Row/row.component";
-import UpdateTemplate from "../../components/UpdateTemplate/updatetemplate.component";
-import { Checkbox } from "antd";
-import "./updatecandidate.style.scss";
-import API from "../../constans/api";
-import { getAuthen, postAuthen, putAuthen } from "../../axios/authenfunction";
-import { useNavigate, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
-import { AccountContext } from "../../context/AccountProvider";
-import { checkEmail, checkSocial } from "../../Utils/validation";
+import React, { useContext, useEffect, useReducer, useState } from 'react'
+import Row from '../../components/Row/row.component'
+import UpdateTemplate from '../../components/UpdateTemplate/updatetemplate.component'
+import { Checkbox } from 'antd'
+import './updatecandidate.style.scss'
+import API from '../../constans/api'
+import { getAuthen, postAuthen, putAuthen } from '../../axios/authenfunction'
+import { useNavigate, useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import { AccountContext } from '../../context/AccountProvider'
+import { checkEmail, checkSocial } from '../../Utils/validation'
+
+import { yupResolver } from '@hookform/resolvers/yup'
+import yup from '../../validator/yup'
+import { useForm } from 'react-hook-form'
 
 const fieldReducer = (state, action) => {
   switch (action.type) {
-    case "CHANGE_FIELD":
-      console.log(action.payload.value);
-      state[action.payload.field] = action.payload.value;
+    case 'CHANGE_FIELD':
+      console.log(action.payload.value)
+      state[action.payload.field] = action.payload.value
       return {
-        ...state,
-      };
-    case "SET_DATA":
-      console.log("set data");
-      console.log(action.payload);
+        ...state
+      }
+    case 'SET_DATA':
+      console.log('set data')
+      console.log(action.payload)
       return {
         ...state,
         id: action.payload.id,
@@ -31,45 +35,61 @@ const fieldReducer = (state, action) => {
         twitter: action.payload.twitterUrl,
         linked: action.payload.linkedinUrl,
         accent: action.payload.accent,
-        dob: action.payload.dob?.split("T")[0],
+        dob: action.payload.dob?.split('T')[0],
         provice: action.payload.provinceName,
         email: action.payload.emailContact,
         phone: action.payload.phoneContact,
         gender: action.payload.gender,
-        avatarUrl: action.payload.avatarUrl,
-      };
+        avatarUrl: action.payload.avatarUrl
+      }
     default:
-      return state;
+      return state
   }
-};
+}
 
 const prepareDataReducer = (state, action) => {
   switch (action.type) {
-    case "FETCH_DATA":
+    case 'FETCH_DATA':
       return {
         ...state,
         provices: action.payload.provices,
-        sub: action.payload.sub,
-      };
+        sub: action.payload.sub
+      }
     default:
-      return state;
+      return state
   }
-};
+}
+
+//  --- SCHEMA ---
+const validationSchema = yup.OBJECT({
+  description: yup.DESCRIPTION,
+  fullname: yup.FULL_NAME,
+  facebook: yup.FACEBOOK,
+  instagram: yup.INSTAGRAM,
+  twitter: yup.TWITTER,
+  linked: yup.LINKEDIN,
+  accent: yup.VOICE_QUALITY,
+  dob: yup.DOB,
+  province: yup.PROVINCE,
+  email: yup.EMAIL,
+  phone: yup.PHONE_NUMBER
+})
+//  --- END - SCHEMA ---
 
 function UpdateCandidate() {
-  let { id } = useParams();
-  const CheckboxGroup = Checkbox.Group;
-  let [plainOptions, setPlainOptions] = useState([]);
-  const [defaultCheckedList, setDefaultCheckedList] = useState([]);
-  const navigate = useNavigate();
+  let { id } = useParams()
+  const CheckboxGroup = Checkbox.Group
+  let [plainOptions, setPlainOptions] = useState([])
+  const [defaultCheckedList, setDefaultCheckedList] = useState([])
+  const navigate = useNavigate()
 
-  const accountContext = useContext(AccountContext);
-  let { data, dispatch } = accountContext;
+  const accountContext = useContext(AccountContext)
+  let { data, dispatch } = accountContext
 
   let [prepareData, prepareDateDispatch] = useReducer(prepareDataReducer, {
     provices: [],
-    sub: [],
-  });
+    sub: []
+  })
 
   let [fields, fieldsDispatch] = useReducer(fieldReducer, {
     id: null,
@@ -84,78 +104,190 @@ function UpdateCandidate() {
     provice: null,
     email: null,
     phone: null,
-    gender: "",
-  });
+    gender: ''
+  })
+
+  //  --- APPLY SCHEMA TO FORM ---
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    mode: 'onSubmit',
+    resolver: yupResolver(validationSchema),
+    defaultValues: fields
+  })
+  //  --- END - APPLY SCHEMA TO FORM ---
 
   useEffect(() => {
     if (data.account) {
-      getAuthen(API['GET_CANDIDATE_INFO']+`${data.account.id}`)
-      .then(response=>{
-        fieldsDispatch({
-          type: "SET_DATA",
-          payload: response.data.data,
-        });
-        setCheckedList(response.data.data.subCategorieNames);
-      })
-      .catch()
+      getAuthen(API['GET_CANDIDATE_INFO'] + `${data.account.id}`)
+        .then(response => {
+          fieldsDispatch({
+            type: 'SET_DATA',
+            payload: response.data.data
+          })
+          setCheckedList(response.data.data.subCategorieNames)
+          reset(fields)
+        })
+        .catch(() => {
+          reset({
+            description: '',
+            fullname: '',
+            facebook: '',
+            instagram: '',
+            twitter: '',
+            linked: '',
+            accent: '',
+            dob: '',
+            province: '',
+            email: '',
+            phone: ''
+          })
+        })
     }
-    console.log(data);
-  }, [data]);
+    console.log(data)
+  }, [data])
 
   useEffect(() => {
     async function fetchData() {
       const [proviceRequest, subRequest] = await Promise.all([
-        getAuthen(API["GET_PROVICES"]),
-        getAuthen(API["GET_SUBCATEGORY"]),
-      ]);
+        getAuthen(API['GET_PROVICES']),
+        getAuthen(API['GET_SUBCATEGORY'])
+      ])
 
       prepareDateDispatch({
-        type: "FETCH_DATA",
+        type: 'FETCH_DATA',
         payload: {
           provices: proviceRequest.data.data,
-          sub: subRequest.data.data,
-        },
-      });
+          sub: subRequest.data.data
+        }
+      })
 
-      setPlainOptions(subRequest.data.data.map((item) => item.name));
+      setPlainOptions(subRequest.data.data.map(item => item.name))
     }
-    fetchData();
-    
-  }, [data]);
+    fetchData()
+  }, [data])
 
-  const [checkedList, setCheckedList] = useState(defaultCheckedList);
-  const [indeterminate, setIndeterminate] = useState(true);
-  const [checkAll, setCheckAll] = useState(false);
+  const [checkedList, setCheckedList] = useState(defaultCheckedList)
+  const [indeterminate, setIndeterminate] = useState(true)
+  const [checkAll, setCheckAll] = useState(false)
 
-  const onChange = (list) => {
-    setCheckedList(list);
-    setIndeterminate(!!list.length && list.length < plainOptions.length);
-    setCheckAll(list.length === plainOptions.length);
-  };
+  const onChange = list => {
+    setCheckedList(list)
+    setIndeterminate(!!list.length && list.length < plainOptions.length)
+    setCheckAll(list.length === plainOptions.length)
+  }
 
-  const onCheckAllChange = (e) => {
-    setCheckedList(e.target.checked ? plainOptions : []);
-    setIndeterminate(false);
-    setCheckAll(e.target.checked);
-  };
+  const onCheckAllChange = e => {
+    setCheckedList(e.target.checked ? plainOptions : [])
+    setIndeterminate(false)
+    setCheckAll(e.target.checked)
+  }
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    console.log(data)
+  }, [data])
 
-  const handelUpdateCandidateData = (e) => {
-    let subCategoryIds = [];
-    checkedList.forEach((item) => {
+  const handelUpdateCandidateDataV2 = data => {
+    let subCategoryIds = []
+    checkedList.forEach(item => {
       prepareData.sub
-        .filter((item2) => item2.name === item)
-        .forEach((category) => {
-          subCategoryIds.push(category.id);
-        });
-    });
+        .filter(item2 => item2.name === item)
+        .forEach(category => {
+          subCategoryIds.push(category.id)
+        })
+    })
 
-    const index = prepareData.provices.findIndex(item=>item.name == fields.provice)
-    console.log('index: '+index);
-    console.log('provice code: '+prepareData.provices[index]);
+    const index = prepareData.provices.findIndex(
+      item => item.name == data.province
+    )
+
+    const payload = {
+      description: data.description,
+      name: data.fullname,
+      gender: Number(fields.gender),
+      dob: new Date(data.dob),
+      avatarUrl: fields.avatarUrl,
+      accent: Number(data.accent),
+      phoneContact: data.phone,
+      emailContact: data.email,
+      facebookUrl: data.facebook,
+      twitterUrl: data.twitter,
+      instagramUrl: data.instagram,
+      linkedinUrl: data.linked,
+      provinceCode: prepareData.provices[index]?.code,
+      subCategoryIds: subCategoryIds
+    }
+
+    payload.dob = payload.dob.toISOString()
+
+    if (fields.id == null) {
+      postAuthen(API['POST_CANDIDATE_INFO'], payload, true)
+        .then(response => {
+          Swal.fire(
+            'Thông báo',
+            'Bạn đã cập nhật thông tin thành công!',
+            'success'
+          ).then(result => {
+            console.log(result)
+            dispatch({
+              type: 'SET_INFOMATION',
+              payload: response.data.data
+            })
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              console.log('go to home')
+              navigate('/')
+            }
+          })
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Vui lòng điền đầy đủ tất cả thông tin!'
+          })
+        })
+    } else {
+      putAuthen(API['POST_CANDIDATE_INFO'], payload, true)
+        .then(response => {
+          dispatch({
+            type: 'SET_INFOMATION',
+            payload: response.data.data
+          })
+          Swal.fire(
+            'Thông báo',
+            'Bạn đã cập nhật thông tin thành công!',
+            'success'
+          )
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Vui lòng điền đầy đủ tất cả thông tin!'
+          })
+        })
+    }
+  }
+
+  const handelUpdateCandidateData = e => {
+    let subCategoryIds = []
+    checkedList.forEach(item => {
+      prepareData.sub
+        .filter(item2 => item2.name === item)
+        .forEach(category => {
+          subCategoryIds.push(category.id)
+        })
+    })
+
+    const index = prepareData.provices.findIndex(
+      item => item.name == fields.provice
+    )
+    console.log('index: ' + index)
+    console.log('provice code: ' + prepareData.provices[index])
 
     const payload = {
       description: fields.description,
@@ -171,34 +303,32 @@ function UpdateCandidate() {
       instagramUrl: fields.instagram,
       linkedinUrl: fields.linked,
       provinceCode: prepareData.provices[index]?.code,
-      subCategoryIds: subCategoryIds,
-    };
+      subCategoryIds: subCategoryIds
+    }
 
     if (!(new Date() - payload.dob > 567648000000)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Không thể đăng kí cho người dưới 18 tuổi!",
-      });
-      return;
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Không thể đăng kí cho người dưới 18 tuổi!'
+      })
+      return
     } else {
-      payload.dob = payload.dob.toISOString();
+      payload.dob = payload.dob.toISOString()
     }
 
     console.clear()
-    console.log(payload);
-
-
+    console.log(payload)
 
     for (const [key, value] of Object.entries(payload)) {
       if (value == null) {
         Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: `Vui lòng điền ${key}!`,
-        });
-        console.log(key);
-        return;
+          icon: 'error',
+          title: 'Oops...',
+          text: `Vui lòng điền ${key}!`
+        })
+        console.log(key)
+        return
       }
     }
 
@@ -247,8 +377,6 @@ function UpdateCandidate() {
     //   return;
     // }
 
-
-
     // if (!checkEmail(payload.emailContact)) {
     //   Swal.fire({
     //     icon: "error",
@@ -259,96 +387,98 @@ function UpdateCandidate() {
     // }
 
     if (fields.id == null) {
-      postAuthen(API["POST_CANDIDATE_INFO"], payload, true)
-        .then((response) => {
+      postAuthen(API['POST_CANDIDATE_INFO'], payload, true)
+        .then(response => {
           Swal.fire(
-            "Thông báo",
-            "Bạn đã cập nhật thông tin thành công!",
-            "success"
-          ).then((result) => {
-            console.log(result);
+            'Thông báo',
+            'Bạn đã cập nhật thông tin thành công!',
+            'success'
+          ).then(result => {
+            console.log(result)
             dispatch({
-              type: "SET_INFOMATION",
-              payload: response.data.data,
-            });
+              type: 'SET_INFOMATION',
+              payload: response.data.data
+            })
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-              console.log("go to home");
-              navigate("/");
+              console.log('go to home')
+              navigate('/')
             }
-          });
+          })
         })
-        .catch((error) => {
+        .catch(error => {
           Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Vui lòng điền đầy đủ tất cả thông tin!",
-          });
-        });
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Vui lòng điền đầy đủ tất cả thông tin!'
+          })
+        })
     } else {
-      putAuthen(API["POST_CANDIDATE_INFO"], payload, true)
-        .then((response) => {
+      putAuthen(API['POST_CANDIDATE_INFO'], payload, true)
+        .then(response => {
           dispatch({
-            type: "SET_INFOMATION",
-            payload: response.data.data,
-          });
+            type: 'SET_INFOMATION',
+            payload: response.data.data
+          })
           Swal.fire(
-            "Thông báo",
-            "Bạn đã cập nhật thông tin thành công!",
-            "success"
-          );
+            'Thông báo',
+            'Bạn đã cập nhật thông tin thành công!',
+            'success'
+          )
         })
-        .catch((error) => {
+        .catch(error => {
           Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Vui lòng điền đầy đủ tất cả thông tin!",
-          });
-        });
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Vui lòng điền đầy đủ tất cả thông tin!'
+          })
+        })
     }
-  };
+  }
   return (
     <div className="updatecandidate">
       <UpdateTemplate
-        saveFunction={handelUpdateCandidateData}
+        saveFunction={handleSubmit(handelUpdateCandidateDataV2)}
         fieldsDispatch={fieldsDispatch}
         fields={fields}
-        imgField={"avatarUrl"}
+        imgField={'avatarUrl'}
       >
         <div className="box">
-          <Row justifyContent={"center"}>
+          <Row justifyContent={'center'}>
             <h3>Thông tin</h3>
           </Row>
-          <Row justifyContent={"between"}>
-            <div className="item">
+          <Row justifyContent={'between'}>
+            <div className={`item ${!!errors.fullname ? 'item__error' : ''}`}>
               <label htmlFor="">Họ và tên: </label>
               <input
+                {...register('fullname')}
                 type="text"
                 value={fields.fullname}
-                onChange={(e) => {
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "fullname",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'fullname',
+                      value: e.target.value
+                    }
+                  })
                 }}
               />
+              <p>{errors.fullname?.message}</p>
             </div>
-            <div className="item">
+            <div className={`item`}>
               <label htmlFor="">Giới tính: </label>
               <select
                 name=""
                 id=""
-                onChange={(e) => {
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "gender",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'gender',
+                      value: e.target.value
+                    }
+                  })
                 }}
               >
                 <option disabled selected value>
@@ -364,38 +494,41 @@ function UpdateCandidate() {
             </div>
           </Row>
 
-          <Row justifyContent={"between"}>
-            <div className="item">
+          <Row justifyContent={'between'}>
+            <div className={`item ${!!errors.dob ? 'item__error' : ''}`}>
               <label htmlFor="">Ngày sinh: </label>
               <input
+                {...register('dob')}
                 type="date"
                 value={fields.dob}
-                onChange={(e) => {
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "dob",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'dob',
+                      value: e.target.value
+                    }
+                  })
                 }}
               />
+              <p>{errors.dob?.message}</p>
             </div>
-            <div className="item">
+            <div className={`item ${!!errors.province ? 'item__error' : ''}`}>
               <label htmlFor="">Thành phố: </label>
               <select
-                onChange={(e) => {
+                {...register('province')}
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "provice",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'provice',
+                      value: e.target.value
+                    }
+                  })
                 }}
                 value={fields.provice}
               >
-                <option disabled selected value>
+                <option disabled selected value="">
                   -- Chọn --
                 </option>
                 {prepareData.provices?.map((item, index) => {
@@ -407,87 +540,95 @@ function UpdateCandidate() {
                     >
                       {item.name}
                     </option>
-                  );
+                  )
                 })}
               </select>
+              <p>{errors.province?.message}</p>
             </div>
           </Row>
 
-          <Row justifyContent={"between"}>
-            <div className="item">
+          <Row justifyContent={'between'}>
+            <div className={`item ${!!errors.phone ? 'item__error' : ''}`}>
               <label htmlFor="">Số điện thoại: </label>
               <input
+                {...register('phone')}
                 type="text"
                 value={fields.phone}
-                onChange={(e) => {
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "phone",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'phone',
+                      value: e.target.value
+                    }
+                  })
                 }}
               />
+              <p>{errors.phone?.message}</p>
             </div>
-            <div className="item">
+            <div className={`item ${!!errors.email ? 'item__error' : ''}`}>
               <label htmlFor="">Email liên hệ: </label>
               <input
+                {...register('email')}
                 type="text"
                 value={fields.email}
-                onChange={(e) => {
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "email",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'email',
+                      value: e.target.value
+                    }
+                  })
                 }}
               />
+              <p>{errors.email?.message}</p>
             </div>
           </Row>
 
           <Row>
-            <div className="item full">
+            <div className={`item full ${!!errors.email ? 'item__error' : ''}`}>
               <label htmlFor="">Mô tả: </label>
               <textarea
+                {...register('description')}
                 cols="10"
                 rows="5"
                 value={fields.description}
-                onChange={(e) => {
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "description",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'description',
+                      value: e.target.value
+                    }
+                  })
                 }}
               ></textarea>
+              <p>{errors.description?.message}</p>
             </div>
           </Row>
         </div>
 
         <div className="box">
-          <Row justifyContent={"center"}>
+          <Row justifyContent={'center'}>
             <h3>Kĩ năng</h3>
           </Row>
-          <Row justifyContent={"center"}>
-            <div className="item full">
+          <Row justifyContent={'center'}>
+            <div className={`item full ${!!errors.email ? 'item__error' : ''}`}>
               <label htmlFor="">Chất giọng: </label>
               <select
-                onChange={(e) => {
+                {...register('accent')}
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "accent",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'accent',
+                      value: e.target.value
+                    }
+                  })
                 }}
               >
-                <option disabled selected value>
+                <option disabled selected value="">
                   -- Chọn --
                 </option>
                 <option value="0" selected={fields.accent == 0}>
@@ -503,10 +644,11 @@ function UpdateCandidate() {
                   Miền tây
                 </option>
               </select>
+              <p>{errors.accent?.message}</p>
             </div>
           </Row>
 
-          <Row justifyContent={"center"}>
+          <Row justifyContent={'center'}>
             <CheckboxGroup
               options={plainOptions}
               value={checkedList}
@@ -523,81 +665,89 @@ function UpdateCandidate() {
         </div>
 
         <div className="box">
-          <Row justifyContent={"center"}>
+          <Row justifyContent={'center'}>
             <h3>Mạng xã hội</h3>
           </Row>
-          <Row justifyContent={"between"}>
-            <div className="item">
+          <Row justifyContent={'between'}>
+            <div className={`item ${!!errors.facebook ? 'item__error' : ''}`}>
               <label htmlFor="">Facebook: </label>
               <input
+                {...register('facebook')}
                 type="text"
                 value={fields.facebook}
-                onChange={(e) => {
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "facebook",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'facebook',
+                      value: e.target.value
+                    }
+                  })
                 }}
               />
+              <p>{errors.facebook?.message}</p>
             </div>
-            <div className="item">
+            <div className={`item ${!!errors.instagram ? 'item__error' : ''}`}>
               <label htmlFor="">Instagram: </label>
               <input
+                {...register('instagram')}
                 type="text"
                 value={fields.instagram}
-                onChange={(e) => {
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "instagram",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'instagram',
+                      value: e.target.value
+                    }
+                  })
                 }}
               />
+              <p>{errors.instagram?.message}</p>
             </div>
           </Row>
-          <Row justifyContent={"between"}>
-            <div className="item">
+          <Row justifyContent={'between'}>
+            <div className={`item ${!!errors.linked ? 'item__error' : ''}`}>
               <label htmlFor="">Linked In: </label>
               <input
+                {...register('linked')}
                 type="text"
                 value={fields.linked}
-                onChange={(e) => {
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "linked",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'linked',
+                      value: e.target.value
+                    }
+                  })
                 }}
               />
+              <p>{errors.linked?.message}</p>
             </div>
-            <div className="item">
+            <div className={`item ${!!errors.twitter ? 'item__error' : ''}`}>
               <label htmlFor="">Twitter: </label>
               <input
+                {...register('twitter')}
                 type="text"
                 value={fields.twitter}
-                onChange={(e) => {
+                onChange={e => {
                   fieldsDispatch({
-                    type: "CHANGE_FIELD",
+                    type: 'CHANGE_FIELD',
                     payload: {
-                      field: "twitter",
-                      value: e.target.value,
-                    },
-                  });
+                      field: 'twitter',
+                      value: e.target.value
+                    }
+                  })
                 }}
               />
+              <p>{errors.twitter?.message}</p>
             </div>
           </Row>
         </div>
       </UpdateTemplate>
     </div>
-  );
+  )
 }
 
-export default UpdateCandidate;
+export default UpdateCandidate

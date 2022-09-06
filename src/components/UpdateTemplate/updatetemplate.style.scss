@@ -82,6 +82,17 @@
       select {
         padding: 5px;
       }
+      // Catch error
+      &__error {
+        input,
+        textarea,
+        select {
+          border-color: #df4759;
+        }
+        p:last-child {
+          color: #df4759;
+        }
+      }
     }
     button {
       margin-right: 20px;
