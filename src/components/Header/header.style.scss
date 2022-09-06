@@ -4,12 +4,22 @@
   margin-bottom: 100px;
 }
 
-.policy {
+.policyWrapper {
   margin: 10px 0;
-  display: flex;
-  align-items: center;
-  input {
-    margin-right: 5px;
+  .policy {
+    display: flex;
+    align-items: center;
+    input {
+      margin-right: 5px;
+    }
+  }
+  &__error {
+    input {
+    }
+    p:last-child {
+      font-weight: 500;
+      color:	rgb(223, 71, 89)
+    }
   }
 }
 
@@ -284,9 +294,14 @@
     border-radius: 4px;
     margin-top: 30px;
 
-    &:hover {
+    &:hover:enabled {
       background-color: $main-color-dark;
     }
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    
   }
   &__forgot {
     text-align: end;
@@ -306,6 +321,15 @@
       border: 1px solid #c5cdd6;
       padding: 12px;
       border-radius: 4px;
+    }
+
+    &__error {
+      input {
+        border-color: 	rgb(223, 71, 89);
+      }
+      p:last-child {
+        color: 	rgb(223, 71, 89);
+      }
     }
   }
   &__google {
