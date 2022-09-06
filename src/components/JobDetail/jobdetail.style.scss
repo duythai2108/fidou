@@ -1,0 +1,52 @@
+.jobdetail {
+  //   width: 700px;
+  background-color: #fff;
+  padding: 50px 200px !important;
+  transition: all 0.3s;
+  min-height: 700px;
+
+  h1 {
+    text-transform: capitalize;
+    margin: 0;
+  }
+
+  .enterprise__info {
+    img {
+      width: 50px;
+    }
+  }
+
+  .jobdetail__company__info strong {
+    display: flex;
+    align-items: center;
+  }
+
+  &__content {
+    .item {
+      margin: 20px 0;
+      p {
+        margin: 0;
+        &:last-child {
+          font-size: 18px;
+        }
+      }
+      strong {
+        margin-right: 10px;
+      }
+
+      span {
+        font-size: 20px;
+      }
+    }
+  }
+  .accept_button {
+    button {
+      margin: 0 10px;
+      font-size: 15px;
+      padding: 5px 10px;
+      .inject {
+        background-color: rgb(248, 86, 86);
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+@import "../../styles/variable.scss";
+.search-job {
+  padding: 50px 200px;
+  min-height: 80vh;
+  display: flex;
+  * {
+    margin: 0;
+  }
+  > .left {
+    width: 300px;
+    .list-service {
+      margin-left: 20px;
+      h4 {
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &.active {
+          color: $main-color;
+          border-left: 2px solid $main-color;
+        }
+
+        &:hover {
+          color: $main-color;
+        }
+      }
+    }
+    select,
+    input {
+      padding: 2px 5px;
+      font-size: 15px !important;
+      border-radius: 4px;
+      color: #4f5963;
+      border: 1px solid #c9d0d9;
+      width: 100%;
+      font-size: 20px;
+    }
+
+    .button {
+      padding: 5px 20px;
+      width: 100%;
+      margin-top: 20px;
+      font-size: 15px;
+    }
+
+    .item {
+      margin: 10px 0;
+      select {
+        width: 100%;
+      }
+    }
+  }
+  .right {
+    flex-grow: 1;
+    margin-left: 40px;
+    h2 {
+      text-align: center;
+    }
+  }
+}

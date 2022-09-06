@@ -1,0 +1,156 @@
+@import "../../styles/variable.scss";
+.background {
+  padding: 50px 450px;
+  padding-bottom: 0;
+  background-color: $main-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  margin-top: 36px;
+
+  button {
+    background-color: #fff;
+    a {
+      color: #19222b;
+    }
+    border: none;
+    margin-right: 40px;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+
+    &:last-child {
+      background-color: transparent;
+      border-color: #fff;
+      color: #fff;
+    }
+  }
+
+  &__left {
+    min-width: 400px;
+    &__button {
+      display: flex;
+    }
+    h1 {
+      color: #fff;
+      font-size: 45px;
+      line-height: 60px;
+      font-weight: 700;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+
+  &__right {
+    img {
+      width: 600px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1750px) {
+  .background {
+    padding: 20px 300px;
+    padding-bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 1750px) {
+  .background {
+    padding: 20px 300px;
+    padding-bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .background {
+    padding: 20px 150px;
+    padding-bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 1150px) {
+  .background {
+    &__left {
+      h1 {
+        color: #fff;
+        font-size: 35px;
+        line-height: 60px;
+        font-weight: 700;
+      }
+      p {
+        font-size: 16px;
+      }
+    }
+    &__right {
+      img {
+        width: 400px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .background {
+    &__left {
+      h1 {
+        color: #fff;
+        font-size: 35px;
+        line-height: 60px;
+        font-weight: 700;
+      }
+      p {
+        font-size: 16px;
+      }
+    }
+    &__right {
+      img {
+        width: 300px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .background {
+    padding: 20px 50px;
+    margin-top: 75px;
+    &__left {
+      h1 {
+        color: #fff;
+        font-size: 25px;
+        line-height: 30px;
+        font-weight: 700;
+      }
+      p {
+        font-size: 16px;
+      }
+    }
+    &__right {
+      img {
+        width: 200px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .background {
+    padding: 20px 50px;
+    flex-direction: column;
+    &__left {
+      min-width: 100px;
+      width: 100%;
+      &__button {
+        button {
+          padding: 5px 7px;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

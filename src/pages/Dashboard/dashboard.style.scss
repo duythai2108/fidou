@@ -1,0 +1,9 @@
+.dashboard {
+  display: flex;
+
+  &__right {
+    flex-grow: 1;
+    background-color: rgb(249 250 251);
+    min-height: 100vh;
+  }
+}

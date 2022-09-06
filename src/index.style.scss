@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "./styles/variable.scss";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.ant-modal-root {
+  position: relative;
+  z-index: 10000000000000;
+}
+
+.ant-menu {
+  z-index: 10000000000000;
+}
+
+.ant-dropdown,
+.ant-select-dropdown {
+  z-index: 1000000000000000;
+}
+
+.box {
+  background-color: #fff;
+  box-shadow: 0 2px 15px 0 rgb(0 0 0 / 5%), 0 2px 5px 0 rgb(25 34 43 / 10%);
+  border-radius: 8px;
+  margin: 30px 0;
+  padding: 20px 70px;
+  width: 100%;
+}
+
+.button {
+  background-color: $main-color;
+  color: #fff;
+  font-size: 18px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s;
+  border-radius: 4px;
+}
+.swal2-container.swal2-center.swal2-backdrop-show {
+  z-index: 100000000000 !important;
+}
+
+.swal2-container {
+  z-index: 100000000000 !important;
+}
+
+.ant-menu-horizontal {
+  border-bottom: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

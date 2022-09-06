@@ -1,0 +1,17 @@
+.room {
+  display: flex;
+  justify-content: space-between;
+  user-select: none;
+  padding: 15px 30px;
+  &__time {
+    color: #b0b3b8;
+    font-size: 11px;
+  }
+
+  &__name {
+    color: #e4e6eb;
+  }
+  &.active {
+    background-color: #1e1f20;
+  }
+}

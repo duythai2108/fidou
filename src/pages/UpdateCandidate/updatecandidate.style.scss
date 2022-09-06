@@ -1,0 +1,22 @@
+.updatecandidate {
+  margin-top: 100px;
+
+  .ant-checkbox-wrapper.ant-checkbox-group-item {
+    width: 25%;
+    margin: 5px;
+    span {
+      font-size: 17px;
+    }
+  }
+
+  .box {
+    .ant-checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  }
+  // .ant-checkbox-wrapper {
+  //   display: none;
+  // }
+}

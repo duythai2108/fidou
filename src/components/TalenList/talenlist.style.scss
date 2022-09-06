@@ -1,0 +1,37 @@
+.talenlist {
+  padding: 30px 300px;
+  background-color: #f1f1f1;
+  margin-top: 70px;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+}
+
+@media only screen and (max-width: 1750px) {
+  .talenlist {
+    padding: 30px 100px;
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  .talenlist {
+    padding: 30px 50px;
+
+    .talencard {
+      width: calc(100% / 2.1);
+    }
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .talenlist {
+    padding: 30px 20px;
+
+    .talencard {
+      width: 100%;
+    }
+  }
+}

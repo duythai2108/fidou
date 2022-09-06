@@ -1,0 +1,31 @@
+.message {
+  width: 100%;
+  margin: 15px 0;
+  display: flex;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    width: 450px;
+  }
+  &__text {
+    background-color: #3e4042;
+    padding: 15px 25px;
+    margin: 0 10px;
+    border-radius: 20px;
+    min-width: 60px;
+    color: #fff;
+    text-align: justify;
+  }
+
+  &.me {
+    justify-content: flex-end;
+    .wrapper {
+      flex-direction: row-reverse;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+}

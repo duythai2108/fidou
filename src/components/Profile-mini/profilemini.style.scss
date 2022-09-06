@@ -1,0 +1,33 @@
+.profile-mini {
+  background-color: #fff;
+  padding: 50px 40px !important;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s;
+  width: 800px;
+
+  img {
+    width: 70px;
+  }
+
+  .right {
+    h3 {
+      text-transform: capitalize;
+    }
+    p {
+      color: #333;
+    }
+    .wrapper {
+      display: flex;
+      justify-content: end;
+    }
+    .button {
+      padding: 5px 20px;
+      font-size: 15px;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-10px);
+  }
+}

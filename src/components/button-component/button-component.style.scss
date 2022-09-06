@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@200&display=swap');
+.button-component {
+  color: black;
+  display: inline;
+  .buttonComponent {
+    font-family: 'Public Sans', sans-serif;
+    text-transform: capitalize;
+    margin-right: 10px;
+    padding: 6px 16px;
+    background-color: rgb(32, 101, 209);
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    line-height: 1.71429;
+    vertical-align: middle;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    box-shadow: rgb(32 101 209 / 24%) 0px 8px 16px 0px;
+    &:hover {
+      background-color: #163d99;
+    }
+  }
+}

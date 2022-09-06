@@ -1,0 +1,15 @@
+.report {
+  table {
+    button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      font-size: 10px;
+
+      &.action {
+        &:last-child {
+          background-color: rgb(248, 86, 86);
+        }
+      }
+    }
+  }
+}

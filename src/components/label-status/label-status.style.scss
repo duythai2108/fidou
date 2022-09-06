@@ -1,0 +1,47 @@
+.label-status {
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  margin: 0;
+  display: inline;
+}
+.label-status {
+  border-radius: 6px;
+  font-weight: bold;
+  padding: 3px 8px;
+  font-size: 10px;
+  text-align: center;
+  margin: 0 5px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &.success {
+    color: rgb(34, 154, 22);
+    background-color: rgba(84, 214, 44, 0.16);
+  }
+
+  &.danger {
+    color: rgb(183, 33, 54);
+    background-color: rgba(255, 72, 66, 0.16);
+  }
+
+  &.process {
+    color: #cad622;
+    background-color: rgb(251, 255, 0, 0.23);
+  }
+
+  &.info {
+    color: rgb(255, 255, 255);
+    background-color: rgb(24, 144, 255);
+  }
+
+  &.large {
+    font-size: 16px;
+  }
+}

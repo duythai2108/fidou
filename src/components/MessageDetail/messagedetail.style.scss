@@ -1,0 +1,32 @@
+.message-detail {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  &__message {
+    // flex-grow: 0.8;
+    padding: 20px;
+    height: 80vh;
+    overflow-y: scroll;
+  }
+
+  &__input {
+    background-color: #3a3b3c;
+    padding: 10px 20px;
+    color: #e4e6eb;
+    width: 96%;
+    display: flex;
+    align-items: center;
+    border-radius: 50px;
+    margin: 0 2%;
+    margin-bottom: 10px;
+
+    input {
+      border: none;
+      outline: none;
+      margin-left: 10px;
+      flex-grow: 1;
+      background-color: transparent;
+    }
+  }
+}

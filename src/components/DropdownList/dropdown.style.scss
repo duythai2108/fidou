@@ -1,0 +1,23 @@
+@import "../../styles/variable.scss";
+
+.dropdownlist {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  span {
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    width: 200px;
+    text-align: center;
+
+    &:hover {
+      border-bottom: 3px solid $main-color;
+    }
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .dropdownlist {
+    display: none;
+  }
+}

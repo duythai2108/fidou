@@ -1,0 +1,117 @@
+.dashboard__left {
+  width: 350px;
+  height: 100vh;
+  background-color: rgb(249 250 251);
+  border-right: 1px dashed rgba(145, 158, 171, 0.24);
+  user-select: none;
+  padding: 70px 20px;
+  transition: all 0.3s;
+
+  &__logo {
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 150px;
+    }
+  }
+
+  &__profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(145, 158, 171, 0.12);
+    // margin: 0 30px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin-bottom: 30px;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 20px;
+    }
+
+    h6 {
+      margin: 0px;
+      font-weight: 600;
+      color: rgb(33, 43, 54);
+      font-size: 15px;
+    }
+
+    &:hover {
+      background-color: rgba(80, 89, 97, 0.12);
+    }
+  }
+
+  &__listpage {
+    .button {
+      border-radius: 12px;
+      padding: 15px 30px;
+      color: rgb(99, 115, 129);
+      transition: all 0.2s;
+
+      span {
+        font-weight: 500;
+      }
+
+      .icon {
+        margin-right: 20px;
+      }
+
+      &.active {
+        color: rgb(32, 101, 209);
+        background-color: rgba(32, 101, 209, 0.1);
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: 5px solid rgb(32, 101, 209);
+      }
+      &:hover {
+        padding-left: 60px;
+      }
+    }
+
+    .title {
+      color: rgb(81, 97, 112);
+      margin-top: 20px;
+      margin-bottom: 10px;
+      padding-left: 10px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .dashboard {
+    .overlay.active {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+  }
+  .dashboard__left {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -100%;
+    width: 350px;
+    z-index: 10000;
+    .button {
+      &:hover {
+        // pointer-events: none;
+        padding-left: 30px;
+      }
+    }
+    &.active {
+      left: 0%;
+    }
+  }
+}

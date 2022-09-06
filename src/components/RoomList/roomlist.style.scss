@@ -1,0 +1,42 @@
+.roomlist {
+  &__collapse {
+    .ant-collapse-header {
+      color: #fff !important;
+    }
+    .ant-collapse-content-box {
+      padding: 0;
+    }
+    a {
+      display: block;
+      border-radius: 7px;
+      //   transition: all 0.2s;
+      &:hover {
+        background-color: #2a2b2c;
+      }
+    }
+    &__button {
+      width: 90%;
+      margin: 20px 5%;
+    }
+
+    &__search {
+      background-color: #3a3b3c;
+      padding: 10px 20px;
+      color: #e4e6eb;
+      width: 90%;
+      margin: 0 5%;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      border-radius: 50px;
+
+      input {
+        border: none;
+        outline: none;
+        margin-left: 10px;
+        flex-grow: 1;
+        background-color: transparent;
+      }
+    }
+  }
+}

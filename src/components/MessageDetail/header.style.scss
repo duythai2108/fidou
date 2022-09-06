@@ -1,0 +1,32 @@
+.headerchat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 14px 20px rgb(0 0 0 / 20%);
+  padding: 25px 30px;
+  &__info {
+    h3,
+    p {
+      color: #fff !important;
+      margin: 0;
+      text-transform: capitalize;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin-bottom: 0;
+    }
+  }
+  &__user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 210px;
+    .ant-btn.ant-btn-text {
+      color: #fff !important;
+    }
+  }
+  button {
+    margin: 0 10px;
+  }
+}

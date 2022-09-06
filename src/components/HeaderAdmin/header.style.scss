@@ -1,0 +1,136 @@
+.header__admin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 70px;
+
+  .icon {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  .tab {
+    display: none;
+  }
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__avatar {
+    width: 35px;
+    height: 35px;
+    margin-left: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    img {
+      width: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      &:hover {
+        filter: blur(2px);
+      }
+    }
+  }
+  .notification-wrapper {
+    position: relative;
+    .notification {
+      min-width: 250px;
+      right: -30px;
+      &__item {
+        > * {
+          width: 100%;
+          color: #111 !important;
+          text-align: left !important;
+          cursor: pointer;
+          padding: 7px 10px;
+          border-radius: 10px;
+          &:hover {
+            background-color: rgba(80, 89, 97, 0.12);
+          }
+        }
+      }
+      &::before {
+        right: 37px;
+      }
+    }
+  }
+
+  .menu,
+  .notification {
+    background-color: #fff;
+    min-width: 20px;
+    position: absolute;
+    top: 120%;
+    right: 0;
+    padding: 15px 0px;
+    border-radius: 5px;
+    color: #000 !important;
+    display: none;
+
+    &.active {
+      display: block;
+    }
+    > * {
+      padding: 0 10px;
+    }
+    &__fullname {
+      font-weight: 600;
+      color: #000 !important;
+      font-size: 17px;
+      text-align: center;
+    }
+
+    &__email {
+      font-weight: 500;
+      color: rgb(99, 115, 129) !important;
+      font-size: 13px;
+      padding-bottom: 15px;
+      border-bottom: 1px #111 dashed;
+    }
+
+    &__link {
+      padding: 0;
+      &__item {
+        * {
+          color: #000 !important;
+        }
+      }
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      top: -5px;
+      right: 12px;
+      transform: rotate(-135deg);
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .header {
+    .tab {
+      display: block;
+    }
+    &__avatar {
+      img {
+        &:hover {
+          filter: blur(0.5px);
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .header {
+    padding: 10px 20px;
+  }
+}

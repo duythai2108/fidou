@@ -1,0 +1,19 @@
+.row {
+  display: flex;
+
+  &.between {
+    justify-content: space-between;
+  }
+
+  &.center {
+    justify-content: center;
+  }
+
+  &.around {
+    justify-content: space-around;
+  }
+
+  &.end {
+    justify-content: end;
+  }
+}

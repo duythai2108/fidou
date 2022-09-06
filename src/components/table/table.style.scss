@@ -1,0 +1,33 @@
+.my-table {
+  padding: 50px 100px;
+
+  table {
+    background-color: #fff;
+    border-radius: 16px;
+    width: 100%;
+    box-shadow: 0 3px 1px -2px rgb(145 158 171 / 20%),
+      0 2px 2px 0 rgb(145 158 171 / 14%), 0 1px 5px 0 rgb(145 158 171 / 12%);
+    margin-top: 20px;
+    tbody {
+      padding: 10px;
+    }
+    thead {
+      tr {
+        border-bottom: 1px solid rgb(245 246 247);
+      }
+    }
+    th {
+      padding: 20px 40px;
+      text-align: center;
+    }
+    tr {
+      margin: 5px 0;
+      td {
+        padding: 10px 20px;
+      }
+    }
+    p {
+      margin: 0 !important;
+    }
+  }
+}
