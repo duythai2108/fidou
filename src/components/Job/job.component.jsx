@@ -52,6 +52,9 @@ function Job({
   status,
   deleteFavorite,
   setUpdateFavorite,
+  age,
+  language,
+  gender,
 }) {
   const [value, setValue] = React.useState(0);
 
