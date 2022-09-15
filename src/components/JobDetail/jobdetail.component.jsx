@@ -185,6 +185,42 @@ const JobDetail = () => {
 
           <p>{job?.description}</p>
         </div>
+        <div className="item">
+          <p>
+            <strong>Độ tuổi: </strong>
+          </p>
+          <p>{job?.minAge} - {job?.maxAge}</p>
+        </div>
+
+        <div className="item">
+          <p>
+            <strong>Giới tính: </strong>
+          </p>
+          <p>
+            {(() => {
+              switch (job?.gender) {
+                case 0:   return "Nam";
+                case 1:   return "Nữ";
+                default:  return "Không yêu cầu";
+              }
+            })()}
+          </p>
+        </div>
+
+        <div className="item">
+          <p>
+            <strong>Ngôn ngữ: </strong>
+          </p>
+          <p>
+            {(() => {
+              switch (job?.language) {
+                case 0:   return "Tiếng Việt";
+                case 1:   return "Tiếng Anh";
+                default:  return "Khác";
+              }
+            })()}
+          </p>
+        </div>
 
         <div className="item">
           <strong>Thời gian: </strong>

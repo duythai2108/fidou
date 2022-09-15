@@ -41,6 +41,10 @@ function Profile() {
   let price = useRef(null);
   let tone = useRef(null);
   let toneDemo = useRef(null);
+  let minAge = useRef(null);
+  let maxAge = useRef(null);
+  let gender = useRef(null);
+  let language = useRef(null);
 
   const isCompany = location.pathname.includes(path["COMPANY_PAGE"]);
 
@@ -128,6 +132,10 @@ function Profile() {
     const txtMinute = minute.current.value;
     const txtPrice = price.current.value;
     const txtTone = tone.current.value;
+    const txtMinAge = minAge.current.value;
+    const txtMaxAge = maxAge.current.value;
+    const txtGender = gender.current.value;
+    const txtLanguage = language.current.value;
 
     if (
       !txtTitle ||
@@ -230,6 +238,10 @@ function Profile() {
           subCategoryId: value,
           price: Number(txtPrice),
           tone: Number(txtTone),
+          minAge: Number(txtMinAge),
+          maxAge: Number(txtMaxAge),
+          language: Number(txtLanguage),
+          gender: Number(txtGender)
         },
         true
       )
@@ -249,6 +261,7 @@ function Profile() {
             price,
             subCategoryId,
             tone,
+            
           } = response.data.data.transaction.job;
           prepareData.account.jobs.push({
             dayDuration,
@@ -530,6 +543,26 @@ function Profile() {
                           : ""}
                       </Radio.Group>
                     </div>
+                      <h3>
+                          Ngôn ngữ yêu cầu cho ứng viên <span>*</span>
+                      </h3>
+                      <select ref={language}>
+                        <option disabled selected value>
+                            -- Chọn --
+                        </option>
+                        <option value="0">Tiếng Việt</option>
+                        <option value="1">Tiếng Anh</option>
+                        </select>
+                    <h3>
+                      Giới tính yêu cầu cho ứng viên <span>*</span>
+                    </h3>
+                    <select ref={gender}>
+                      <option disabled selected value>
+                        -- Chọn --
+                      </option>
+                      <option value="0">Nam</option>
+                      <option value="1">Nữ</option>
+                    </select>
                     <h3>
                       Tone giọng yêu cầu cho ứng viên <span>*</span>
                     </h3>
@@ -541,6 +574,12 @@ function Profile() {
                       <option value="1">Giọng vừa</option>
                       <option value="2">Giọng cao</option>
                     </select>
+                  </div>
+                  <div className="box">
+                      <div className="row">
+                        <h3>Độ tuổi <span>*</span></h3>
+                        <input type="number" min = "18" ref={minAge}/> -  <input type="number" min = "18" ref={maxAge}/>
+                      </div>
                   </div>
                   <div className="modal-adddemo__description box">
                     <h3>
@@ -556,7 +595,7 @@ function Profile() {
                     </p>
                     <input type="text" ref={description2} />
                   </div>
-
+                            
                   <div className="box">
                     <div className="row">
                       <h3>

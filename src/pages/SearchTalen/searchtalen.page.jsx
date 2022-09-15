@@ -32,6 +32,8 @@ function SearchTalen() {
     subCategory: "",
     gender: "",
     SearchText: "",
+    minAge: "",
+    maxAge: ""
   });
 
   useEffect(() => {
@@ -63,7 +65,8 @@ function SearchTalen() {
     fullQuery += `&Gender=${query.gender}`;
     fullQuery += `&SearchText=${query.SearchText}`;
     // }
-
+    fullQuery += `&MinAge=${query.minAge}`;
+    fullQuery += `&MaxAge=${query.maxAge}`;
     console.log(fullQuery);
 
     getParam(API["GET_CANDIDATE_FILTER"], fullQuery).then((response) => {
@@ -123,6 +126,33 @@ function SearchTalen() {
     }
 
     if (
+      searchParams.get("MinAge") &&
+      query.minAge != searchParams.get("MinAge")
+    ) {
+      queryDispatch({
+        type: "SET_FIELD",
+        payload: {
+          field: "minAge",
+          value: searchParams.get("MinAge"),
+        },
+      });
+    }
+
+    if (
+      searchParams.get("MaxAge") &&
+      query.maxAge != searchParams.get("MaxAge")
+    ) {
+      queryDispatch({
+        type: "SET_FIELD",
+        payload: {
+          field: "maxAge",
+          value: searchParams.get("MaxAge"),
+        },
+      });
+    }
+    
+
+    if (
       searchParams.get("SearchText") &&
       query.SearchText != searchParams.get("SearchText")
     ) {
@@ -134,7 +164,9 @@ function SearchTalen() {
         },
       });
     }
-  }, [searchParams]);
+  }, [searchParams]
+  );
+
 
   useEffect(() => {
     search();
@@ -228,6 +260,48 @@ function SearchTalen() {
               });
             }}
           />
+        </div>
+
+        <div className="item">
+          <h3>Độ tuổi từ </h3>
+          {/* <input
+            type="text"
+            value={query.minAge}
+            onChange={(e) => {
+              queryDispatch({
+                type: "SET_FIELD",
+                payload: {
+                  field: "MinAge",
+                  value: e.target.value,
+                },
+              });
+            }}
+          />  */}
+          <input
+            type="text"
+            onChange={(e) => {
+              queryDispatch({
+                type: "SET_FIELD",
+                payload: {
+                  field: "minAge",
+                  value: e.target.value,
+                },
+              });
+            }}
+          />
+          <h3>đến</h3>  
+          <input
+            type="text"
+            onChange={(e) => {
+              queryDispatch({
+                type: "SET_FIELD",
+                payload: {
+                  field: "maxAge",
+                  value: e.target.value,
+                },
+              });
+            }}
+          /> 
         </div>
 
         <div className="item">
