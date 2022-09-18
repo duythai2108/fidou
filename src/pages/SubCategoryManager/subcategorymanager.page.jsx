@@ -10,8 +10,8 @@ function SubCategoryManager() {
   const [category, setCategory] = useState([]);
   const columns = [
     { heading: "ID", value: "id" },
-    { heading: "Name", value: "name" },
-    { heading: "Category", value: "categoryId" },
+    { heading: "Tên", value: "name" },
+    { heading: "Dịch vụ", value: "categoryId" },
   ];
 
   useEffect(() => {

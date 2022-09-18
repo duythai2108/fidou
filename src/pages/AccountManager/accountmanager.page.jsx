@@ -19,11 +19,11 @@ function AccountManager() {
   const [isUpdate, setIsUpdate] = useState(true);
   const columns = [
     // { heading: "ID", value: "id" },
-    { heading: "Avatar", value: "avt" },
+    { heading: "Ảnh đại diện", value: "avt" },
     { heading: "Email", value: "email" },
-    { heading: "Role", value: "role" },
-    { heading: "Status", value: "status" },
-    { heading: "Action", value: "action" },
+    { heading: "Vai trò", value: "role" },
+    { heading: "Trạng thái", value: "status" },
+    { heading: "Thao tác", value: "action" },
   ];
 
   const handleDelete = (id, email) => {
@@ -119,7 +119,7 @@ function AccountManager() {
                   handleDelete(item.id, item.email);
                 }}
               >
-                Delete
+                Xóa
               </button>
             ) : (
               <></>
@@ -131,7 +131,7 @@ function AccountManager() {
                   handleBlock(item.id, item.email);
                 }}
               >
-                Block
+                Chặn
               </button>
             ) : (
               <></>
@@ -144,7 +144,7 @@ function AccountManager() {
                   handleActive(item.id, item.email);
                 }}
               >
-                Active
+                Bỏ chặn
               </button>
             ) : (
               <></>

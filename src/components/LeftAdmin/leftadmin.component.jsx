@@ -34,7 +34,7 @@ function LeftAdmin({ accountAdmin, isShow, showNav }) {
             <>
               <ButtonItem
                 to={"/" + path["ADMIN_PAGE"] + "/" + path["ACCOUNT_ADMIN_PAGE"]}
-                title="Account"
+                title="Tài khoản"
                 showNav={showNav}
               >
                 <CategoryIcon className="icon" />
@@ -43,7 +43,7 @@ function LeftAdmin({ accountAdmin, isShow, showNav }) {
                 to={
                   "/" + path["ADMIN_PAGE"] + "/" + path["CATEGORY_ADMIN_PAGE"]
                 }
-                title="Category"
+                title="Dịch vụ"
                 showNav={showNav}
               >
                 <CategoryIcon className="icon" />
@@ -55,21 +55,21 @@ function LeftAdmin({ accountAdmin, isShow, showNav }) {
                   "/" +
                   path["SUBCATEGORY_ADMIN_PAGE"]
                 }
-                title="Sub Category"
+                title="Kĩ năng"
                 showNav={showNav}
               >
                 <CategoryIcon className="icon" />
               </ButtonItem>
               <ButtonItem
                 to={"/" + path["ADMIN_PAGE"] + "/" + path["DEPOSIT_ADMIN_PAGE"]}
-                title="Deposit"
+                title="Quản lí ví"
                 showNav={showNav}
               >
                 <CategoryIcon className="icon" />
               </ButtonItem>
               <ButtonItem
                 to={"/" + path["ADMIN_PAGE"] + "/" + path["REPORT"]}
-                title="Report"
+                title="Quản lí báo cáo"
                 showNav={showNav}
               >
                 <CategoryIcon className="icon" />
