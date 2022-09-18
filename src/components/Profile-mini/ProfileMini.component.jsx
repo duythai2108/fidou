@@ -24,6 +24,12 @@ function ProfileMini({ data, isShowInvite }) {
   let minute = useRef(null);
   let price = useRef(null);
   let tone = useRef(null);
+  let toneDemo = useRef(null);
+  let minAge = useRef(null);
+  let maxAge = useRef(null);
+  let gender = useRef(null);
+  let language = useRef(null);
+
 
   useEffect(() => {
     getAuthen(API["GET_SUBCATEGORY"]).then((response) => {
@@ -41,6 +47,10 @@ function ProfileMini({ data, isShowInvite }) {
     const txtMinute = minute.current.value;
     const txtPrice = price.current.value;
     const txtTone = tone.current.value;
+    const txtMinAge = minAge.current.value;
+    const txtMaxAge = maxAge.current.value;
+    const txtGender = gender.current.value;
+    const txtLanguage = language.current.value;
 
     const dataa = {
       jobPayload: {
@@ -52,6 +62,10 @@ function ProfileMini({ data, isShowInvite }) {
         subCategoryId: value,
         price: new Number(txtPrice),
         tone: new Number(txtTone),
+        minAge: new Number(txtMinAge),
+        maxAge: new Number(txtMaxAge),
+        txtGender: txtGender,
+        txtLanguage: txtLanguage
       },
       candidateId: data.id,
     };
@@ -169,16 +183,42 @@ function ProfileMini({ data, isShowInvite }) {
             </Radio.Group>
           </div>
           <h3>
+              Ngôn ngữ yêu cầu cho ứng viên <span>*</span>
+          </h3>
+          <select ref={language}>
+              <option disabled selected value>
+                  -- Chọn --
+              </option>
+              <option value="0">Tiếng Việt</option>
+              <option value="1">Tiếng Anh</option>
+          </select>
+          <h3>
+               Giới tính yêu cầu cho ứng viên <span>*</span>
+          </h3>
+          <select ref={gender}>
+              <option disabled selected value>
+                -- Chọn --
+              </option>
+              <option value="0">Nam</option>
+              <option value="1">Nữ</option>
+          </select>
+          <h3>
             Tone <span>*</span>
           </h3>
           <select ref={tone}>
             <option disabled selected value>
               -- Chọn --
             </option>
-            <option value="0">Giọng trâm</option>
+            <option value="0">Giọng trầm</option>
             <option value="1">Giọng vừa</option>
             <option value="2">Giọng cao</option>
           </select>
+        </div>
+        <div className="box">
+            <div className="row">
+                <h3>Độ tuổi <span>*</span></h3>
+                <input type="number" min = "18" ref={minAge}/> -  <input type="number" min = "18" ref={maxAge}/>
+            </div>
         </div>
         <div className="modal-adddemo__description box">
           <h3>
