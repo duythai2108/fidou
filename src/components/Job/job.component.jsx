@@ -52,7 +52,8 @@ function Job({
   status,
   deleteFavorite,
   setUpdateFavorite,
-  age,
+  minAge,
+  maxAge,
   language,
   gender,
 }) {
@@ -133,7 +134,10 @@ function Job({
     field.minute.current.value = minute;
     field.price.current.value = price;
     field.tone.current.value = tone;
-
+    field.minAge.current.value = minAge;
+    field.maxAge.current.value = maxAge;
+    field.gender.current.value = gender;
+    field.language.current.value = language;  
     setUpdate(id);
   };
 
@@ -433,7 +437,7 @@ function Job({
             delete
           </button>
           <button className="update" onClick={showEdit}>
-            update
+            update 
           </button>
         </div>
       ) : (

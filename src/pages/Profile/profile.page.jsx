@@ -174,6 +174,10 @@ function Profile() {
           subCategoryId: value,
           price: Number(txtPrice),
           tone: Number(txtTone),
+          minAge: Number(txtMinAge),
+          maxAge: Number(txtMaxAge),
+          language: Number(txtLanguage),
+          gender: Number(txtGender)
         },
         true
       )
@@ -194,6 +198,10 @@ function Profile() {
             price,
             subCategoryId,
             tone,
+            minAge,
+            maxAge,
+            language,
+            gender
           } = response.data.data;
           const oldData = prepareData.account.jobs.filter(
             (item) => item.id == id
@@ -212,6 +220,10 @@ function Profile() {
             price,
             subCategoryId,
             tone,
+            minAge,
+            maxAge,
+            language,
+            gender
           };
           console.log(prepareData.account.jobs);
           setPrepareData({
@@ -261,7 +273,10 @@ function Profile() {
             price,
             subCategoryId,
             tone,
-            
+            minAge,
+            maxAge,
+            language,
+            gender
           } = response.data.data.transaction.job;
           prepareData.account.jobs.push({
             dayDuration,
@@ -276,6 +291,10 @@ function Profile() {
             price,
             subCategoryId,
             tone,
+            minAge,
+            maxAge,
+            language,
+            gender
           });
           console.log(prepareData.account.jobs);
           setPrepareData({
@@ -655,6 +674,10 @@ function Profile() {
                         price={item.price}
                         id={item.id}
                         tone={item.tone}
+                        minAge={item.minAge}
+                        maxAge={item.maxAge}
+                        language={item.language}
+                        gender={item.gender}
                         setDeleteId={setDeleteId}
                         setIsShowAddJob={setIsShowAddJob}
                         subCategoryId={item.subCategoryId}
@@ -668,6 +691,10 @@ function Profile() {
                           minute,
                           price,
                           tone,
+                          minAge,
+                          maxAge,
+                          language,
+                          gender,
                           setValue,
                         }}
                       />
