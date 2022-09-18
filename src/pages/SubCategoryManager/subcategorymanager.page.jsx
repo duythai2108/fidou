@@ -40,7 +40,7 @@ function SubCategoryManager() {
     // const categories = JSON.parse(localStorage.getItem("category"));
     // console.log(categories);
     const { value: formValues } = await Swal.fire({
-      title: "Add new category",
+      title: "Thêm mới kĩ năng",
       html: `<div class="add-money">
       <div><label htmlFor="swal-input1">Tên: </label><input id="swal-input1" class="swal2-input"></div>
       <div><label htmlFor="swal-input2">Tên: </label>

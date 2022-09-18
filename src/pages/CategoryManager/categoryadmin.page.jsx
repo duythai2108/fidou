@@ -39,7 +39,7 @@ function CategoryAdmin() {
 
   const add = async () => {
     const { value: formValues } = await Swal.fire({
-      title: "Add new category",
+      title: "Thêm mới dịch vụ",
       html: `<div class="add-money">
         <div><label htmlFor="swal-input1">Tên: </label><input id="swal-input1" class="swal2-input"></div>
       </div>`,
