@@ -11,8 +11,8 @@ function CategoryAdmin() {
   const [data, setData] = useState([]);
   const columns = [
     { heading: "ID", value: "id" },
-    { heading: "Name", value: "name" },
-    { heading: "Sub Category", value: "subCategory" },
+    { heading: "Tên", value: "name" },
+    { heading: "Kĩ năng", value: "subCategory" },
   ];
 
   useEffect(() => {

@@ -12,9 +12,9 @@ function DepositManager() {
   const [data, setData] = useState([]);
   const columns = [
     { heading: "ID", value: "id" },
-    { heading: "Available", value: "availableBalance" },
-    { heading: "Locked", value: "lockedBalance" },
-    { heading: "Deposit Code", value: "depositCode" },
+    { heading: "Số dư", value: "availableBalance" },
+    { heading: "Số tiền kí quỹ", value: "lockedBalance" },
+    { heading: "Mã nạp tiền", value: "depositCode" },
   ];
 
   useEffect(() => {

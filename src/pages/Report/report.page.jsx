@@ -12,12 +12,12 @@ function Report() {
   const [realdata, setRealData] = useState([]);
   const columns = [
     // { heading: "ID", value: "id" },
-    { heading: "Created Time", value: "createdTime" },
-    { heading: "Is Reviewed", value: "isReviewed" },
+    { heading: "Ngày tạo báo cáo", value: "createdTime" },
+    { heading: "Trạng thái", value: "isReviewed" },
     { heading: "Ứng viên", value: "candidateEmail" },
-    { heading: "Content", value: "content" },
-    { heading: "Voice", value: "voiceLink" },
-    { heading: "Action", value: "action" },
+    { heading: "Nội dung", value: "content" },
+    { heading: "Nội dung âm thanh", value: "voiceLink" },
+    { heading: "Thao tác", value: "action" },
   ];
 
   const reportHandler = (id, status, realdata) => {
