@@ -597,7 +597,7 @@ function Profile() {
                   <div className="box">
                       <div className="row">
                         <h3>Độ tuổi <span>*</span></h3>
-                        <input type="number" min = "18" ref={minAge}/> -  <input type="number" min = "18" ref={maxAge}/>
+                        <input type="number" ref={minAge}/> -  <input type="number" ref={maxAge}/>
                       </div>
                   </div>
                   <div className="modal-adddemo__description box">

@@ -18,22 +18,31 @@ const queryReducer = (state, action) => {
 };
 
 const SearchJob = () => {
+  let [categories, setCategories] = useState([]);
   let [subCategories, setSubCategories] = useState([]);
   let [candidates, setCandidates] = useState([]);
   const accountContext = useContext(AccountContext);
   const { data } = accountContext;
   let [query, queryDispatch] = useReducer(queryReducer, {
     category: "",
+    subCategory: "",
     min: "",
     max: "",
     tone: "",
+    gender: "",
+    minAge: "",
+    maxAge: ""
   });
 
   const search = () => {
-    let fullQuery = "?aa=1";
+    let fullQuery = "?";
 
     if (query.category != "") {
       fullQuery += `&CategoryId=${query.category}`;
+    }
+
+    if (query.subCategory != "") {
+      fullQuery += `&SubCategoryId=${query.subCategory}`;
     }
 
     if (query.min != "") {
@@ -42,6 +51,14 @@ const SearchJob = () => {
 
     if (query.max != "") {
       fullQuery += `&MaxPrice=${query.max}`;
+    }
+
+    if (query.minAge != "") {
+      fullQuery += `&MinAge=${query.minAge}`;
+    }
+
+    if (query.maxAge != "") {
+      fullQuery += `&MaxAge=${query.maxAge}`;
     }
 
     if (query.tone != "") {
@@ -59,6 +76,9 @@ const SearchJob = () => {
   }, [query]);
 
   useEffect(() => {
+    getAuthen(API["GET_SUBCATEGORY"]).then((response) => {
+      setCategories(response.data.data);
+    });
     getAuthen(API["GET_CATEGORY"]).then((response) => {
       setSubCategories(response.data.data);
     });
@@ -107,7 +127,40 @@ const SearchJob = () => {
         </div>
 
         <div className="item">
-          <h3>Gía từ</h3>
+          <h3>Kĩ năng</h3>
+          <select
+            name=""
+            id=""
+            onChange={(e) => {
+              queryDispatch({
+                type: "SET_FIELD",
+                payload: {
+                  field: "subCategory",
+                  value: e.target.value,
+                },
+              });
+            }}
+            value={query.subCategory}
+          >
+            <option selected value="">
+              Tất cả
+            </option>
+            {categories
+              .filter(
+                (i) => i.categoryId == query.category || query.category == ""
+              )
+              .map((category, index) => {
+                return (
+                  <option value={category.id} key={index}>
+                    {category.name}
+                  </option>
+                );
+              })}
+          </select>
+        </div>
+
+        <div className="item">
+          <h3>Giá từ</h3>
           <input
             type="number"
             value={query?.min}
@@ -138,6 +191,59 @@ const SearchJob = () => {
               });
             }}
           />
+        </div>
+
+        <div className="item">
+          <h3>Độ tuổi từ </h3>
+          <input
+            type="number"
+            onChange={(e) => {
+              queryDispatch({
+                type: "SET_FIELD",
+                payload: {
+                  field: "minAge",
+                  value: e.target.value,
+                },
+              });
+            }}
+          />
+          <h3>đến</h3>  
+          <input
+            type="number"
+            onChange={(e) => {
+              queryDispatch({
+                type: "SET_FIELD",
+                payload: {
+                  field: "maxAge",
+                  value: e.target.value,
+                },
+              });
+            }}
+          /> 
+        </div>
+
+        <div className="item">
+          <h3>Giới tính</h3>
+          <select
+            name=""
+            id=""
+            value={query.gender}
+            onChange={(e) => {
+              queryDispatch({
+                type: "SET_FIELD",
+                payload: {
+                  field: "gender",
+                  value: e.target.value,
+                },
+              });
+            }}
+          >
+            <option selected value="">
+              Tất cả
+            </option>
+            <option value="0">Nam</option>
+            <option value="1">Nữ</option>
+          </select>
         </div>
 
         <div className="item">
@@ -185,6 +291,9 @@ const SearchJob = () => {
               jobId={item.id}
               jobName={item.name}
               tone={item.tone}
+              gender={item.gender}
+              minAg= {item.minAge}
+              maxAge= {item.maxAge}
               jobStatus={item.jobStatus}
               showAddtofavorite={data?.account?.role == "0"}
             />

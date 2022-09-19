@@ -278,7 +278,7 @@ function SearchTalen() {
             }}
           />  */}
           <input
-            type="text"
+            type="number"
             onChange={(e) => {
               queryDispatch({
                 type: "SET_FIELD",
@@ -291,7 +291,7 @@ function SearchTalen() {
           />
           <h3>đến</h3>  
           <input
-            type="text"
+            type="number"
             onChange={(e) => {
               queryDispatch({
                 type: "SET_FIELD",
