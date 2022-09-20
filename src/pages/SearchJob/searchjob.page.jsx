@@ -41,6 +41,10 @@ const SearchJob = () => {
       fullQuery += `&CategoryId=${query.category}`;
     }
 
+    if (query.gender!= "") {
+      fullQuery += `&Gender=${query.gender}`;
+    }
+
     if (query.subCategory != "") {
       fullQuery += `&SubCategoryId=${query.subCategory}`;
     }
