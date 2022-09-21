@@ -33,7 +33,8 @@ function SearchTalen() {
     gender: "",
     SearchText: "",
     minAge: "",
-    maxAge: ""
+    maxAge: "",
+    accent: ""
   });
 
   useEffect(() => {
@@ -67,6 +68,7 @@ function SearchTalen() {
     // }
     fullQuery += `&MinAge=${query.minAge}`;
     fullQuery += `&MaxAge=${query.maxAge}`;
+    fullQuery += `&Accent=${query.accent}`;
     console.log(fullQuery);
 
     getParam(API["GET_CANDIDATE_FILTER"], fullQuery).then((response) => {
@@ -325,6 +327,40 @@ function SearchTalen() {
             </option>
             <option value="0">Nam</option>
             <option value="1">Nữ</option>
+          </select>
+        </div>
+
+        <div className="item">
+          <h3>Vùng miền</h3>
+          <select
+            name=""
+            id=""
+            value={query.accent}
+            onChange={(e) => {
+              queryDispatch({
+                type: "SET_FIELD",
+                payload: {
+                  field: "accent",
+                  value: e.target.value,
+                },
+              });
+            }}
+          >
+            <option selected value="">
+              Tất cả
+            </option>
+            <option value="0">
+                  Miền bắc
+                </option>
+                <option value="1">
+                  Miền trung
+                </option>
+                <option value="2">
+                  Miền nam
+                </option>
+                <option value="3">
+                  Miền tây
+                </option>
           </select>
         </div>
         {/* <div className="item">

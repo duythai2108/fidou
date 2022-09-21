@@ -24,7 +24,6 @@ function ProfileMini({ data, isShowInvite }) {
   let minute = useRef(null);
   let price = useRef(null);
   let tone = useRef(null);
-  let toneDemo = useRef(null);
   let minAge = useRef(null);
   let maxAge = useRef(null);
   let gender = useRef(null);
@@ -64,8 +63,8 @@ function ProfileMini({ data, isShowInvite }) {
         tone: new Number(txtTone),
         minAge: new Number(txtMinAge),
         maxAge: new Number(txtMaxAge),
-        txtGender: txtGender,
-        txtLanguage: txtLanguage
+        gender: new Number(txtGender),
+        language: new Number(txtLanguage)
       },
       candidateId: data.id,
     };
@@ -166,7 +165,7 @@ function ProfileMini({ data, isShowInvite }) {
       >
         <div className="modal-adddemo__skill box">
           <h3>
-            Kĩ năng <span>*</span>
+            Kĩ năng<span>*</span>
           </h3>
           <p>Chọn 1 kĩ năng phù hợp khi mời ứng viên tham gia công việc.</p>
           <div className="modal-adddemo__skill__list">
