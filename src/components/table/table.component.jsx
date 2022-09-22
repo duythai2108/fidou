@@ -102,7 +102,7 @@ const Table = (props) => {
       <Row justifyContent={"end"}>
         <h1>{titleTable}</h1>
         <Row justifyContent={"end"}>
-          <ButtonComponent title="Add" addAcction={addAcction} />
+          <ButtonComponent title="Thêm" addAcction={addAcction} />
         </Row>
       </Row>
 

@@ -178,7 +178,7 @@ function SearchTalen() {
     <div className="search-talen">
       <div className="left">
         <div className="item">
-          <h3>All Service</h3>
+          <h3>Tất cả dịch vụ</h3>
           <div className="list-service">
             <h4
               className={query?.category == "" ? "active" : ""}

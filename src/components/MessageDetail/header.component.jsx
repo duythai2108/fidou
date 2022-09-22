@@ -90,7 +90,7 @@ function Header({
               });
             }}
           >
-            Finish
+            Hoàn thành
           </button>
         </div>
       ) : (

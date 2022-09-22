@@ -69,7 +69,7 @@ const JobDetail = () => {
         createRoom(
           enterprise.id,
           data.account?.id,
-          `Group chat ${dataResponse.jobInvitation.job.name} (Invite Job)`,
+          `Phòng trao đổi ${dataResponse.jobInvitation.job.name} (Mời vào làm việc)`,
           dataResponse.transaction.order.id
         );
         setJob({
@@ -111,7 +111,7 @@ const JobDetail = () => {
       date.getMinutes();
     addDoc(collection(db, "room"), {
       title: title,
-      description: "tesst new",
+      description: "Phòng trao đổi",
       lastSent: dateString,
       user: [id1, id2],
       orderId: orderId,
@@ -147,7 +147,7 @@ const JobDetail = () => {
           .then((response) => {
             Swal.fire(
               "Thông báo!",
-              "Apply vào dự án " + job.name + " success",
+              "Nộp đơn vào dự án " + job.name + " thành công",
               "success"
             );
           })

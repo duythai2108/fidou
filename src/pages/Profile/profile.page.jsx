@@ -259,7 +259,7 @@ function Profile() {
       )
         .then((response) => {
           setIsShowAddJob(false);
-          Swal.fire("Thông báo", "Đăng job thành công!", "success");
+          Swal.fire("Thông báo", "Đăng công việc thành công!", "success");
           const {
             dayDuration,
             description,
@@ -448,7 +448,7 @@ function Profile() {
                   Thêm bản ghi âm
                 </button>
                 <Modal
-                  title="Add new demo"
+                  title="Thêm bản ghi âm"
                   centered
                   visible={isShowAdd}
                   onOk={() => handelCreateDemo()}
@@ -458,7 +458,7 @@ function Profile() {
                 >
                   <div className="modal-adddemo__skill box">
                     <h3>
-                      Skill <span>*</span>
+                      Kĩ năng <span>*</span>
                     </h3>
                     <p>Chọn 1 kĩ năng mà bản ghi âm này sẽ thể hiện.</p>
                     {!isCompany ? (
@@ -510,7 +510,7 @@ function Profile() {
                     <input type="file" ref={file} />
 
                     <h3>
-                      Tone <span>*</span>
+                      Tone giọng <span>*</span>
                     </h3>
                     <select ref={toneDemo}>
                       <option disabled selected value>
@@ -533,7 +533,7 @@ function Profile() {
                   Thêm công việc
                 </button>
                 <Modal
-                  title="Add Job"
+                  title="Thêm công việc"
                   centered
                   visible={isShowAddJob}
                   onOk={handelAddJob}
@@ -624,13 +624,13 @@ function Profile() {
                     </div>
                     <div className="row">
                       <h3>
-                        Giờ cần hoàn thành <span>*</span>
+                        Giờ cần hoàn thành <span></span>
                       </h3>
                       <input type="number" ref={hours} />
                     </div>
                     <div className="row">
                       <h3>
-                        Phút cần hoàn thành <span>*</span>
+                        Phút cần hoàn thành <span></span>
                       </h3>
                       <input type="number" ref={minute} />
                     </div>
@@ -707,7 +707,7 @@ function Profile() {
             </>
           ) : (
             <>
-              <h3>Voice Over Demos</h3>
+              <h2>Tất cả bản thử giọng</h2>
               {prepareData.account.voiceDemos?.length > 0 ? (
                 prepareData.account.voiceDemos.map((item, index) => {
                   return (
@@ -739,7 +739,7 @@ function Profile() {
             </div>
           </div>
           <div className="profile__info__right__description">
-            <h3>About {prepareData.account.name}</h3>
+            <h3>Giới thiệu về {prepareData.account.name}</h3>
             <p>{prepareData.account.description}</p>
           </div>
 
