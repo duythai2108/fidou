@@ -423,7 +423,7 @@ function Header() {
                   setSelectCategory(e)
                 }}
               >
-                <Option value="">All Service</Option>
+                <Option value="">Tất cả dịch vụ</Option>
                 {category.map(item => {
                   return <Option value={item.id}>{item.name}</Option>
                 })}
@@ -538,9 +538,9 @@ function Header() {
                 {/* <Link to={PATH['LOGIN_PAGE']}>
           Log In
         </Link> */}
-                <button onClick={showModal}>Login </button>
+                <button onClick={showModal}>Đăng nhập </button>
                 <Modal
-                  title="Login to Voice"
+                  title="Đăng nhập vào Fidou"
                   visible={isModalVisibleLogin}
                   footer={null}
                   onCancel={handleCancel}
@@ -582,7 +582,7 @@ function Header() {
                   </button>
 
                   <div className="modal__or">
-                    <span>Or</span>
+                    <span>Hoặc</span>
                   </div>
 
                   <button className="modal__google" onClick={handleLoginGoogle}>
@@ -594,7 +594,7 @@ function Header() {
               <div className="header__right__signup">
                 <button onClick={showModalSignup}>Đăng kí</button>
                 <Modal
-                  title="Signup to Voice"
+                  title="Đăng kí tài khoản"
                   visible={isModalVisibleSignup}
                   footer={null}
                   onCancel={handleCancelSignup}

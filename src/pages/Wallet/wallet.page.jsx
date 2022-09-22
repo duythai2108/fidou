@@ -57,7 +57,7 @@ const Wallet = () => {
           <strong className="momo__title">Thanh toán bằng ví điện tử</strong>
           <div className="item">
             <strong>Nội dung:</strong>
-            <p>VOICE {wallet?.depositCode}</p>
+            <p>VOICE_MOMO {wallet?.depositCode}</p>
           </div>
           <div className="momo__qr">
             <img src="/images/momo-qr-code.jpg" alt="momo-qr-code" />
@@ -69,10 +69,10 @@ const Wallet = () => {
         <table border={1}>
           <thead>
             <tr>
-              <th>Admin</th>
-              <th>Amount</th>
-              <th>Time</th>
-              <th>Type</th>
+              <th>ID</th>
+              <th>Số tiền</th>
+              <th>Thời gian</th>
+              <th>Loại giao dịch</th>
             </tr>
           </thead>
           <tbody>

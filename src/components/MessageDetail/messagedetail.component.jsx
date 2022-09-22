@@ -281,7 +281,7 @@ function MessageDetail({ onRoom }) {
               sentMessage("text");
             }}
           >
-            Sent
+            Gửi
           </Button>
         </div>
       ) : (

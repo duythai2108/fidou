@@ -17,20 +17,20 @@ function Footer() {
         </p>
       </div>
       <div className="footer__2">
-        <h1>Company</h1>
-        <span>About</span>
-        <span>Contact</span>
-        <span>Careers</span>
-        <span>Press</span>
-        <span>Report</span>
+        <h1>Công ty</h1>
+        <span>Thông tin</span>
+        <span>Liên hệ</span>
+        <span>Thành tựu</span>
+        <span>Nhấn</span>
+        <span>Báo cáo</span>
       </div>
       <div className="footer__3">
-        <h1>Learn</h1>
-        <span>Help</span>
-        <span>Blog</span>
-        <span>Podcart</span>
-        <span>Resources</span>
-        <span>Events</span>
+        <h1>Giá trị</h1>
+        <span>Trợ giúp</span>
+        <span>Blog cá nhân</span>
+        <span>Danh thiếp</span>
+        <span>Mã nguồn</span>
+        <span>Sự kiện</span>
       </div>
     </footer>
   );

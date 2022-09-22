@@ -18,11 +18,11 @@ const ORDER_STATUS = {
 };
 
 const TRANSACTION_TYPE = {
-  0: "RECEIVE",
-  1: "SEND",
-  2: "DEPOSIT",
-  3: "REFUNDED",
-  4: "UNLOCK",
+  0: "Nhận khoản thanh toán",
+  1: "Kí quỹ",
+  2: "Nạp tiền",
+  3: "Hoàn trả",
+  4: "Thanh toán cho công việc",
 };
 
 const TONE = {
@@ -32,15 +32,15 @@ const TONE = {
 };
 
 const ACCOUNT_STATUS = {
-  0: "INACTIVE",
-  1: "ACTIVE",
-  2: "BLOCKED",
-  3: "DELETED",
+  0: "Không hoạt động",
+  1: "Hoạt động",
+  2: "Bị khóa",
+  3: "Bị xóa",
 };
 
 const ROLE_ENUM = {
-  0: "CANDIDATE",
-  1: "ENTERPRISE",
+  0: "Ứng viên",
+  1: "Nhà tuyển dụng",
 };
 
 export { ORDER_STATUS, TRANSACTION_TYPE, TONE, ACCOUNT_STATUS, ROLE_ENUM };

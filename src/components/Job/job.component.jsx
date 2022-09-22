@@ -217,7 +217,7 @@ function Job({
       date.getMinutes();
     addDoc(collection(db, "room"), {
       title: title,
-      description: "tesst new",
+      description: "Phòng trao đổi",
       lastSent: dateString,
       user: [id1, id2],
       orderId: orderId,
@@ -237,11 +237,11 @@ function Job({
       },
       true
     ).then((response) => {
-      Swal.fire("Thông báo!", "Approve Job thành công", "success").then(() => {
+      Swal.fire("Thông báo!", "Chấp nhận ứng viên thành công", "success").then(() => {
         createRoom(
           response.data.data.candidateId,
           data.account.id,
-          "Group chat " + jobName,
+          "Phòng trao đổi " + jobName,
           orderId
         );
       });
@@ -284,7 +284,7 @@ function Job({
           .then((response) => {
             Swal.fire(
               "Thông báo!",
-              "Apply vào dự án " + title + " success",
+              "Nộp đơn vào dự án " + title + " thành công",
               "success"
             );
           })
@@ -392,7 +392,7 @@ function Job({
                       approveJob(item.id, jobId);
                     }}
                   >
-                    Approve
+                    Phê duyệt
                   </button>
                 </div>
               );
@@ -415,7 +415,7 @@ function Job({
         {review ? (
           <div className="review">
             <button className="button" onClick={showReview}>
-              Review
+              Đánh giá
             </button>
           </div>
         ) : (
@@ -424,7 +424,7 @@ function Job({
         {report ? (
           <div className="review">
             <button className="button" onClick={showReport}>
-              Report
+              Báo cáo
             </button>
           </div>
         ) : (

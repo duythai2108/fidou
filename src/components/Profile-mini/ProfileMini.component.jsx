@@ -155,7 +155,7 @@ function ProfileMini({ data, isShowInvite }) {
         )}
       </div>
       <Modal
-        title="Add Job"
+        title="Mời vào công việc"
         centered
         visible={isShowAddJob}
         onOk={() => handelAddJob()}
@@ -235,19 +235,19 @@ function ProfileMini({ data, isShowInvite }) {
         <div className="box">
           <div className="row">
             <h3>
-              Ngày hoàn thành <span>*</span>
+              Ngày hoàn thành<span>*</span>
             </h3>
             <input type="number" ref={day} />
           </div>
           <div className="row">
             <h3>
-              Giờ hoàn thành <span>*</span>
+              Giờ hoàn thành <span></span>
             </h3>
             <input type="number" ref={hours} />
           </div>
           <div className="row">
             <h3>
-              Phút hoàn thành <span>*</span>
+              Phút hoàn thành <span></span>
             </h3>
             <input type="number" ref={minute} />
           </div>
