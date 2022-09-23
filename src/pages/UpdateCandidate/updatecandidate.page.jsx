@@ -129,7 +129,7 @@ function UpdateCandidate() {
             payload: response.data.data
           })
           setCheckedList(response.data.data.subCategorieNames)
-          reset(fields)
+          reset(response.data.data)
         })
         .catch(() => {
           reset({
