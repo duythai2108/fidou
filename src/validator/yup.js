@@ -1,4 +1,4 @@
-import { object, object as OBJECT, ref, string, bool, date } from 'yup'
+import { object, object as OBJECT, ref, string, number, bool, date } from 'yup'
 import {
   notSpecialRegExp,
   passDigitSpecialRegExp,
@@ -48,6 +48,14 @@ const FULL_NAME = string()
   )
   .max(32, 'Tên không được vượt quá 32 ký tự')
 
+const FULL_NAME_NOT_REQUIRED = string()
+  .matches(notAllowNumRegExp, 'Tên không được chứa số')
+  .matches(
+    notSpecialRegExp,
+    'Tên không được chứa các ký tự đặc biệt(@,#,...etc) '
+  )
+  .max(32, 'Tên không được vượt quá 32 ký tự')
+
 const COMPANY_NAME = string()
   .required('Vui lòng nhập tên công ty')
   .max(32, 'Tên công ty không được vượt quá 32 ký tự')
@@ -79,6 +87,33 @@ const LINKEDIN = string().required('Vui lòng nhập Linked In')
 const TWITTER = string().required('Vui lòng nhập Twitter')
 // ----- END - UPDATE PROFILE -----
 
+// ----- SEARCH -----
+const MIN_AGE = number()
+  .integer()
+  .transform(value => (isNaN(value) ? undefined : value))
+  .nullable()
+  .min(0, 'Độ tuổi không được chứa số âm')
+  .max(100, 'Độ tuổi không được quá 100')
+const MAX_AGE = number()
+  .integer()
+  .transform(value => (isNaN(value) ? undefined : value))
+  .nullable()
+  .min(0, 'Độ tuổi không được chứa số âm')
+  .max(100, 'Độ tuổi không được quá 100')
+
+const MIN_PRICE = number()
+  .integer()
+  .transform(value => (isNaN(value) ? undefined : value))
+  .nullable()
+  .min(0, 'Giá tiền không được chứa số âm')
+const MAX_PRICE = number()
+  .integer()
+  .transform(value => (isNaN(value) ? undefined : value))
+  .nullable()
+  .min(0, 'Giá tiền không được chứa số âm')
+
+// ----- END - SEARCH -----
+
 const validations = {
   OBJECT,
 
@@ -89,6 +124,7 @@ const validations = {
   ACCEPT_POLICY,
 
   FULL_NAME,
+  FULL_NAME_NOT_REQUIRED,
   COMPANY_NAME,
   WEBSITE_NAME,
   DESCRIPTION,
@@ -103,7 +139,12 @@ const validations = {
   FACEBOOK,
   INSTAGRAM,
   LINKEDIN,
-  TWITTER
+  TWITTER,
+
+  MIN_AGE,
+  MAX_AGE,
+  MIN_PRICE,
+  MAX_PRICE
 }
 
 export default validations
