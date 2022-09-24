@@ -8,9 +8,14 @@
   h1 {
     text-transform: capitalize;
     margin: 0;
+    text-align: center;
   }
 
   .enterprise__info {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+
     img {
       width: 50px;
     }
@@ -19,6 +24,8 @@
   .jobdetail__company__info strong {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    column-gap: 4px;
   }
 
   &__content {
@@ -26,6 +33,7 @@
       margin: 20px 0;
       p {
         margin: 0;
+        margin-right: 8px;
         &:last-child {
           font-size: 18px;
         }

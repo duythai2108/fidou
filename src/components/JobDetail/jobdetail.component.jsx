@@ -173,8 +173,9 @@ const JobDetail = () => {
               <img src={enterprise?.logoUrl} alt="" />
               {enterprise?.name}
             </div>
-          </Link>{' '}
-          - {new Date(job?.createdTime).toLocaleDateString()}
+          </Link>
+          {' - '}
+          {new Date(job?.createdTime).toLocaleDateString()}
         </strong>
       </div>
 
