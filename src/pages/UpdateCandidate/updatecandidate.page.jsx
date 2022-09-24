@@ -129,7 +129,9 @@ function UpdateCandidate() {
             payload: response.data.data
           })
           setCheckedList(response.data.data.subCategorieNames)
-          reset(response.data.data)
+          const temp = { ...response.data.data }
+          temp.dob = response.data.data?.dob?.split('T')[0]
+          reset(temp)
         })
         .catch(() => {
           reset({
