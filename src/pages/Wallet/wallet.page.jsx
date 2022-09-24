@@ -54,7 +54,7 @@ const Wallet = () => {
         </div>
 
         <div className="momo">
-          <strong className="momo__title">Thanh toán bằng ví điện tử</strong>
+          <strong className="momo__title">Thanh toán bằng ví MOMO</strong>
           <div className="item">
             <strong>Nội dung:</strong>
             <p>VOICE_MOMO {wallet?.depositCode}</p>
@@ -63,7 +63,19 @@ const Wallet = () => {
             <img src="/images/momo-qr-code.jpg" alt="momo-qr-code" />
           </div>
         </div>
+
+        <div className="zalo">
+          <strong className="zalo__title">Thanh toán bằng ví Zalo Pay</strong>
+          <div className="item">
+            <strong>Nội dung:</strong>
+            <p>VOICE_ZALO {wallet?.depositCode}</p>
+          </div>
+          <div className="zalo__qr">
+            <img src="/images/zalopay.jpg" alt="zalo-qr-code" />
+          </div>
+        </div>
       </div>
+      
       <div className="transaction">
         <h3 style={{ marginTop: '20px' }}>Lịch sử giao dịch:</h3>
         <table border={1}>
