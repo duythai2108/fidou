@@ -1,6 +1,6 @@
 const notAllowNumRegExp = /^([^0-9]*)$/
 const numRegExp = /^([0-9]*)$/
-const notSpecialRegExp = /^[^*|\\":<>[\]{}`\\()';@&$!#%^//=_~?+-]+$/
+const notSpecialRegExp = /^[^*|\\":<>[\]{}`\\()';@&$!#%^//=_~?+-]*$/i
 const passUpperRegExp = /^.*[A-Z].*$/
 const passLowerRegExp = /^.*[a-z].*$/
 const passDigitSpecialRegExp = /^(?=.*?[0-9])|(?=.*?\W).*$/

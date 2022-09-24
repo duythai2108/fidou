@@ -1,53 +1,53 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
-import { getAdmin, putAdmin, putAuthen } from "../../axios/authenfunction";
-import TableColumnText from "../../components/table-column-text/table-column-text.component";
-import Table from "../../components/table/table.component";
-import API from "../../constans/api";
-import "./report.style.scss";
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import { getAdmin, putAdmin, putAuthen } from '../../axios/authenfunction'
+import TableColumnText from '../../components/table-column-text/table-column-text.component'
+import Table from '../../components/table/table.component'
+import API from '../../constans/api'
+import './report.style.scss'
 
 function Report() {
-  const [data, setData] = useState([]);
-  const [realdata, setRealData] = useState([]);
+  const [data, setData] = useState([])
+  const [realdata, setRealData] = useState([])
   const columns = [
     // { heading: "ID", value: "id" },
-    { heading: "Ngày tạo báo cáo", value: "createdTime" },
-    { heading: "Trạng thái", value: "isReviewed" },
-    { heading: "Ứng viên", value: "candidateEmail" },
-    { heading: "Nội dung", value: "content" },
-    { heading: "Nội dung âm thanh", value: "voiceLink" },
-    { heading: "Thao tác", value: "action" },
-  ];
+    { heading: 'Ngày tạo báo cáo', value: 'createdTime' },
+    { heading: 'Trạng thái', value: 'isReviewed' },
+    { heading: 'Ứng viên', value: 'candidateEmail' },
+    { heading: 'Nội dung', value: 'content' },
+    { heading: 'Nội dung âm thanh', value: 'voiceLink' },
+    { heading: 'Thao tác', value: 'action' }
+  ]
 
   const reportHandler = (id, status, realdata) => {
-    console.log(realdata);
+    console.log(realdata)
     putAdmin(
-      API["REPORT_REVIEW"],
+      API['REPORT_REVIEW'],
       {
         id: id,
-        isTrue: status,
+        isTrue: status
       },
       true
     )
-      .then((response) => {
-        console.log(realdata);
-        realdata.filter((item) => item.id == id)[0].isReviewed = true;
-        mapData(realdata);
-        Swal.fire("Thông báo", "Đánh giá thành công!", "success");
+      .then(response => {
+        console.log(realdata)
+        realdata.filter(item => item.id == id)[0].isReviewed = true
+        mapData(realdata)
+        Swal.fire('Thông báo', 'Đánh giá thành công!', 'success')
       })
-      .catch();
-  };
+      .catch()
+  }
 
-  const mapData = (list) => {
+  const mapData = list => {
     setData(
-      list.map((item) => {
-        const date = new Date(item.createdTime);
-        console.log(item.isReviewed);
+      list.map(item => {
+        const date = new Date(item.createdTime)
+        console.log(item.isReviewed)
         return {
           // id: item.id,
           createdTime: <TableColumnText data={date.toDateString()} />,
-          isReviewed: <TableColumnText data={item.isReviewed ? "done" : ""} />,
+          isReviewed: <TableColumnText data={item.isReviewed ? 'done' : ''} />,
           content: <p>{item.content}</p>,
           candidateEmail: <p>{item.candidateEmail}</p>,
           voiceLink: (
@@ -60,7 +60,7 @@ function Report() {
               <button
                 className="button action"
                 onClick={() => {
-                  reportHandler(item.id, true, realdata);
+                  reportHandler(item.id, true, realdata)
                 }}
               >
                 Chấp thuận
@@ -68,7 +68,7 @@ function Report() {
               <button
                 className="button action"
                 onClick={() => {
-                  reportHandler(item.id, false, realdata);
+                  reportHandler(item.id, false, realdata)
                 }}
               >
                 Từ chối
@@ -76,25 +76,30 @@ function Report() {
             </>
           ) : (
             <></>
-          ),
-        };
+          )
+        }
       })
-    );
-  };
+    )
+  }
 
   useEffect(() => {
-    getAdmin(API["GET_REPORT_LIST"], true)
-      .then((response) => {
-        setRealData(response.data.data);
-        mapData(response.data.data);
+    // Hide add button
+    document
+      .getElementsByClassName('button-component')[0]
+      .style.setProperty('display', 'none')
+
+    getAdmin(API['GET_REPORT_LIST'], true)
+      .then(response => {
+        setRealData(response.data.data)
+        mapData(response.data.data)
       })
-      .catch();
-  }, []);
+      .catch()
+  }, [])
 
   useEffect(() => {
-    console.clear();
-    console.log(realdata);
-  }, [realdata]);
+    console.clear()
+    console.log(realdata)
+  }, [realdata])
 
   // const add = async () => {
   //   const { value: formValues } = await Swal.fire({
@@ -136,7 +141,7 @@ function Report() {
     <div className="report">
       <Table columns={columns} datas={data} />
     </div>
-  );
+  )
 }
 
-export default Report;
+export default Report

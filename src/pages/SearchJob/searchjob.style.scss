@@ -33,6 +33,9 @@
       border: 1px solid #c9d0d9;
       width: 100%;
       font-size: 20px;
+      &.errorInput{
+        border-color:  #df4759;
+      }
     }
 
     .button {
@@ -55,5 +58,8 @@
     h2 {
       text-align: center;
     }
+  }
+  .errorMessage {
+    color: #df4759;
   }
 }

@@ -1,93 +1,123 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
-import { getAuthen, getParam } from "../../axios/authenfunction";
-import Job from "../../components/Job/job.component";
-import JobDetail from "../../components/JobDetail/jobdetail.component";
-import API from "../../constans/api";
-import { AccountContext } from "../../context/AccountProvider";
-import "./searchjob.style.scss";
+import React, { useContext, useEffect, useReducer, useState } from 'react'
+import { getAuthen, getParam } from '../../axios/authenfunction'
+import Job from '../../components/Job/job.component'
+import JobDetail from '../../components/JobDetail/jobdetail.component'
+import API from '../../constans/api'
+import { AccountContext } from '../../context/AccountProvider'
+import './searchjob.style.scss'
+
+import { yupResolver } from '@hookform/resolvers/yup'
+import yup from '../../validator/yup'
+import { useForm } from 'react-hook-form'
+
 const queryReducer = (state, action) => {
   switch (action.type) {
-    case "SET_FIELD":
-      state[action.payload.field] = action.payload.value;
+    case 'SET_FIELD':
+      state[action.payload.field] = action.payload.value
       return {
-        ...state,
-      };
+        ...state
+      }
     default:
-      return state;
+      return state
   }
-};
+}
+
+//  --- SCHEMA ---
+const validationSchema = yup.OBJECT({
+  min: yup.MIN_PRICE,
+  max: yup.MAX_PRICE,
+  minAge: yup.MIN_AGE,
+  maxAge: yup.MAX_AGE
+})
+//  --- END - SCHEMA ---
 
 const SearchJob = () => {
-  let [categories, setCategories] = useState([]);
-  let [subCategories, setSubCategories] = useState([]);
-  let [candidates, setCandidates] = useState([]);
-  const accountContext = useContext(AccountContext);
-  const { data } = accountContext;
+  let [categories, setCategories] = useState([])
+  let [subCategories, setSubCategories] = useState([])
+  let [candidates, setCandidates] = useState([])
+  const accountContext = useContext(AccountContext)
+  const { data } = accountContext
   let [query, queryDispatch] = useReducer(queryReducer, {
-    category: "",
-    subCategory: "",
-    min: "",
-    max: "",
-    tone: "",
-    gender: "",
-    minAge: "",
-    maxAge: ""
-  });
+    category: '',
+    subCategory: '',
+    min: '',
+    max: '',
+    tone: '',
+    gender: '',
+    minAge: '',
+    maxAge: ''
+  })
 
-  const search = () => {
-    let fullQuery = "?";
+  //  --- APPLY SCHEMA TO FORM ---
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onSubmit',
+    resolver: yupResolver(validationSchema),
+    defaultValues: query
+  })
+  //  --- END - APPLY SCHEMA TO FORM ---
 
-    if (query.category != "") {
-      fullQuery += `&CategoryId=${query.category}`;
+  const search = hookFormData => {
+    console.log(
+      `TinNguyen:  ===> file: searchjob.page.jsx ===> line 65 ===> hookFormData`,
+      hookFormData
+    )
+    let fullQuery = '?'
+
+    if (query.category != '') {
+      fullQuery += `&CategoryId=${query.category}`
     }
 
-    if (query.gender!= "") {
-      fullQuery += `&Gender=${query.gender}`;
+    if (query.gender != '') {
+      fullQuery += `&Gender=${query.gender}`
     }
 
-    if (query.subCategory != "") {
-      fullQuery += `&SubCategoryId=${query.subCategory}`;
+    if (query.subCategory != '') {
+      fullQuery += `&SubCategoryId=${query.subCategory}`
     }
 
-    if (query.min != "") {
-      fullQuery += `&MinPrice=${query.min}`;
+    if (hookFormData && hookFormData.min) {
+      fullQuery += `&MinPrice=${hookFormData.min}`
     }
 
-    if (query.max != "") {
-      fullQuery += `&MaxPrice=${query.max}`;
+    if (hookFormData && hookFormData.max) {
+      fullQuery += `&MaxPrice=${hookFormData.max}`
     }
 
-    if (query.minAge != "") {
-      fullQuery += `&MinAge=${query.minAge}`;
+    if (hookFormData && hookFormData.minAge) {
+      fullQuery += `&MinAge=${hookFormData.minAge}`
     }
 
-    if (query.maxAge != "") {
-      fullQuery += `&MaxAge=${query.maxAge}`;
+    if (hookFormData && hookFormData.maxAge) {
+      fullQuery += `&MaxAge=${hookFormData.maxAge}`
     }
 
-    if (query.tone != "") {
-      fullQuery += `&Tone=${query.tone}`;
+    if (query.tone != '') {
+      fullQuery += `&Tone=${query.tone}`
     }
 
-    getParam(API["GET_JOB_FILTER"], fullQuery).then((response) => {
-      console.log(response.data.data);
-      setCandidates(response.data.data);
-    });
-  };
+    getParam(API['GET_JOB_FILTER'], fullQuery).then(response => {
+      console.log(response.data.data)
+      setCandidates(response.data.data)
+    })
+  }
 
   useEffect(() => {
-    console.log(query);
-  }, [query]);
+    console.log(query)
+  }, [query])
 
   useEffect(() => {
-    getAuthen(API["GET_SUBCATEGORY"]).then((response) => {
-      setCategories(response.data.data);
-    });
-    getAuthen(API["GET_CATEGORY"]).then((response) => {
-      setSubCategories(response.data.data);
-    });
-    search();
-  }, []);
+    getAuthen(API['GET_SUBCATEGORY']).then(response => {
+      setCategories(response.data.data)
+    })
+    getAuthen(API['GET_CATEGORY']).then(response => {
+      setSubCategories(response.data.data)
+    })
+    search()
+  }, [])
 
   return (
     <div className="search-job">
@@ -96,15 +126,15 @@ const SearchJob = () => {
           <h3>Tất cả dịch vụ</h3>
           <div className="list-service">
             <h4
-              className={query?.category == "" ? "active" : ""}
+              className={query?.category == '' ? 'active' : ''}
               onClick={() => {
                 queryDispatch({
-                  type: "SET_FIELD",
+                  type: 'SET_FIELD',
                   payload: {
-                    field: "category",
-                    value: "",
-                  },
-                });
+                    field: 'category',
+                    value: ''
+                  }
+                })
               }}
             >
               Tất cả
@@ -112,20 +142,20 @@ const SearchJob = () => {
             {subCategories.map((item, index) => {
               return (
                 <h4
-                  className={query?.category == item.id ? "active" : ""}
+                  className={query?.category == item.id ? 'active' : ''}
                   onClick={() => {
                     queryDispatch({
-                      type: "SET_FIELD",
+                      type: 'SET_FIELD',
                       payload: {
-                        field: "category",
-                        value: item.id,
-                      },
-                    });
+                        field: 'category',
+                        value: item.id
+                      }
+                    })
                   }}
                 >
                   {item.name}
                 </h4>
-              );
+              )
             })}
           </div>
         </div>
@@ -135,14 +165,14 @@ const SearchJob = () => {
           <select
             name=""
             id=""
-            onChange={(e) => {
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "subCategory",
-                  value: e.target.value,
-                },
-              });
+                  field: 'subCategory',
+                  value: e.target.value
+                }
+              })
             }}
             value={query.subCategory}
           >
@@ -151,14 +181,14 @@ const SearchJob = () => {
             </option>
             {categories
               .filter(
-                (i) => i.categoryId == query.category || query.category == ""
+                i => i.categoryId == query.category || query.category == ''
               )
               .map((category, index) => {
                 return (
                   <option value={category.id} key={index}>
                     {category.name}
                   </option>
-                );
+                )
               })}
           </select>
         </div>
@@ -166,64 +196,76 @@ const SearchJob = () => {
         <div className="item">
           <h3>Giá từ</h3>
           <input
+            {...register('min')}
+            className={`${!!errors.min ? 'errorInput' : ''}`}
             type="number"
             value={query?.min}
-            onChange={(e) => {
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "min",
-                  value: e.target.value,
-                },
-              });
+                  field: 'min',
+                  value: e.target.value
+                }
+              })
             }}
           />
+          <p className="errorMessage">{errors.min?.message}</p>
         </div>
 
         <div className="item">
           <h3>Đến</h3>
           <input
+            {...register('max')}
+            className={`${!!errors.max ? 'errorInput' : ''}`}
             type="number"
             value={query?.max}
-            onChange={(e) => {
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "max",
-                  value: e.target.value,
-                },
-              });
+                  field: 'max',
+                  value: e.target.value
+                }
+              })
             }}
           />
+          <p className="errorMessage">{errors.max?.message}</p>
         </div>
 
         <div className="item">
           <h3>Độ tuổi từ </h3>
           <input
+            {...register('minAge')}
+            className={`${!!errors.minAge ? 'errorInput' : ''}`}
             type="number"
-            onChange={(e) => {
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "minAge",
-                  value: e.target.value,
-                },
-              });
+                  field: 'minAge',
+                  value: e.target.value
+                }
+              })
             }}
           />
-          <h3>đến</h3>  
+          <p className="errorMessage">{errors.minAge?.message}</p>
+          <h3>đến</h3>
           <input
+            {...register('maxAge')}
+            className={`${!!errors.maxAge ? 'errorInput' : ''}`}
             type="number"
-            onChange={(e) => {
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "maxAge",
-                  value: e.target.value,
-                },
-              });
+                  field: 'maxAge',
+                  value: e.target.value
+                }
+              })
             }}
-          /> 
+          />
+          <p className="errorMessage">{errors.maxAge?.message}</p>
         </div>
 
         <div className="item">
@@ -232,14 +274,14 @@ const SearchJob = () => {
             name=""
             id=""
             value={query.gender}
-            onChange={(e) => {
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "gender",
-                  value: e.target.value,
-                },
-              });
+                  field: 'gender',
+                  value: e.target.value
+                }
+              })
             }}
           >
             <option selected value="">
@@ -255,14 +297,14 @@ const SearchJob = () => {
           <select
             name=""
             id=""
-            onChange={(e) => {
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "tone",
-                  value: e.target.value,
-                },
-              });
+                  field: 'tone',
+                  value: e.target.value
+                }
+              })
             }}
           >
             <option selected value="">
@@ -274,7 +316,7 @@ const SearchJob = () => {
           </select>
         </div>
 
-        <button className="button" onClick={search}>
+        <button className="button" onClick={handleSubmit(search)}>
           Tìm kiếm
         </button>
       </div>
@@ -296,16 +338,16 @@ const SearchJob = () => {
               jobName={item.name}
               tone={item.tone}
               gender={item.gender}
-              minAg= {item.minAge}
-              maxAge= {item.maxAge}
+              minAg={item.minAge}
+              maxAge={item.maxAge}
               jobStatus={item.jobStatus}
-              showAddtofavorite={data?.account?.role == "0"}
+              showAddtofavorite={data?.account?.role == '0'}
             />
-          );
+          )
         })}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SearchJob;
+export default SearchJob

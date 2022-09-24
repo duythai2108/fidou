@@ -1,109 +1,109 @@
-import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
+import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 import {
   deleteAdmin,
   deleteAuthen,
   getAdmin,
-  putAdmin,
-} from "../../axios/authenfunction";
-import ImageComponent from "../../components/ImageComponent/img.component";
-import TableColumnText from "../../components/table-column-text/table-column-text.component";
-import Table from "../../components/table/table.component";
-import API from "../../constans/api";
-import { ACCOUNT_STATUS, ROLE_ENUM } from "../../constans/enum";
-import "./accountmanager.style.scss";
+  putAdmin
+} from '../../axios/authenfunction'
+import ImageComponent from '../../components/ImageComponent/img.component'
+import TableColumnText from '../../components/table-column-text/table-column-text.component'
+import Table from '../../components/table/table.component'
+import API from '../../constans/api'
+import { ACCOUNT_STATUS, ROLE_ENUM } from '../../constans/enum'
+import './accountmanager.style.scss'
 
 function AccountManager() {
-  const [data, setData] = useState([]);
-  const [list, setList] = useState([]);
-  const [isUpdate, setIsUpdate] = useState(true);
+  const [data, setData] = useState([])
+  const [list, setList] = useState([])
+  const [isUpdate, setIsUpdate] = useState(true)
   const columns = [
     // { heading: "ID", value: "id" },
-    { heading: "Ảnh đại diện", value: "avt" },
-    { heading: "Email", value: "email" },
-    { heading: "Vai trò", value: "role" },
-    { heading: "Trạng thái", value: "status" },
-    { heading: "Thao tác", value: "action" },
-  ];
+    { heading: 'Ảnh đại diện', value: 'avt' },
+    { heading: 'Email', value: 'email' },
+    { heading: 'Vai trò', value: 'role' },
+    { heading: 'Trạng thái', value: 'status' },
+    { heading: 'Thao tác', value: 'action' }
+  ]
 
   const handleDelete = (id, email) => {
     Swal.fire({
       title: `Bạn có muốn xóa tài khoản ${email}?`,
       showCancelButton: true,
-      confirmButtonText: "Xóa",
-    }).then((result) => {
+      confirmButtonText: 'Xóa'
+    }).then(result => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        deleteAdmin(API["DELETE_ACCOUNT"] + `?id=${id}`, true)
-          .then((response) => {
+        deleteAdmin(API['DELETE_ACCOUNT'] + `?id=${id}`, true)
+          .then(response => {
             Swal.fire(
-              "Thông báo!",
+              'Thông báo!',
               `Xóa tài khoản ${email} thành công!`,
-              "success"
-            );
-            setIsUpdate(true);
+              'success'
+            )
+            setIsUpdate(true)
           })
-          .catch();
+          .catch()
       } else if (result.isDenied) {
       }
-    });
-  };
+    })
+  }
 
   const handleBlock = (id, email) => {
     Swal.fire({
       title: `Bạn có muốn chặn tài khoản ${email}?`,
       showCancelButton: true,
-      confirmButtonText: "Chặn",
-    }).then((result) => {
+      confirmButtonText: 'Chặn'
+    }).then(result => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        putAdmin(API["BLOCK_ACCOUNT"] + `?id=${id}`, {}, true)
-          .then((response) => {
+        putAdmin(API['BLOCK_ACCOUNT'] + `?id=${id}`, {}, true)
+          .then(response => {
             Swal.fire(
-              "Thông báo!",
+              'Thông báo!',
               `Chặn tài khoản ${email} thành công!`,
-              "success"
-            );
-            setIsUpdate(true);
+              'success'
+            )
+            setIsUpdate(true)
           })
-          .catch();
+          .catch()
       } else if (result.isDenied) {
       }
-    });
-  };
+    })
+  }
 
   const handleActive = (id, email) => {
     Swal.fire({
       title: `Bạn có muốn bỏ chặn tài khoản ${email}?`,
       showCancelButton: true,
-      confirmButtonText: "Bỏ chặn",
-    }).then((result) => {
+      confirmButtonText: 'Bỏ chặn'
+    }).then(result => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         putAdmin(
-          API["UNBLOCK_ACCOUNT"] + `${id}`,
+          API['UNBLOCK_ACCOUNT'] + `${id}`,
           {
             accountId: id,
-            status: 1,
+            status: 1
           },
           true
         )
-          .then((response) => {
+          .then(response => {
             Swal.fire(
-              "Thông báo!",
+              'Thông báo!',
               `Bỏ chặn tài khoản ${email} thành công!`,
-              "success"
-            );
-            setIsUpdate(true);
+              'success'
+            )
+            setIsUpdate(true)
           })
-          .catch();
+          .catch()
       } else if (result.isDenied) {
       }
-    });
-  };
+    })
+  }
 
-  const setHTML = (data) => {
-    const newList = data.map((item) => {
+  const setHTML = data => {
+    const newList = data.map(item => {
       return {
         id: <TableColumnText data={item.id} />,
         email: <TableColumnText data={item.email} />,
@@ -116,7 +116,7 @@ function AccountManager() {
               <button
                 className="button delete"
                 onClick={() => {
-                  handleDelete(item.id, item.email);
+                  handleDelete(item.id, item.email)
                 }}
               >
                 Xóa
@@ -128,7 +128,7 @@ function AccountManager() {
               <button
                 className="button block"
                 onClick={() => {
-                  handleBlock(item.id, item.email);
+                  handleBlock(item.id, item.email)
                 }}
               >
                 Chặn
@@ -141,7 +141,7 @@ function AccountManager() {
               <button
                 className="button active"
                 onClick={() => {
-                  handleActive(item.id, item.email);
+                  handleActive(item.id, item.email)
                 }}
               >
                 Bỏ chặn
@@ -150,29 +150,36 @@ function AccountManager() {
               <></>
             )}
           </div>
-        ),
-      };
-    });
-    setData(newList);
-  };
+        )
+      }
+    })
+    setData(newList)
+  }
+
+  React.useEffect(() => {
+    // Hide add button
+    document
+      .getElementsByClassName('button-component')[0]
+      .style.setProperty('display', 'none')
+  }, [])
 
   useEffect(() => {
     if (isUpdate) {
-      getAdmin(API["GET_ALL_ACCOUNT"], true)
-        .then((response) => {
-          setList(response.data.data);
-          setHTML(response.data.data);
+      getAdmin(API['GET_ALL_ACCOUNT'], true)
+        .then(response => {
+          setList(response.data.data)
+          setHTML(response.data.data)
         })
-        .catch();
-      setIsUpdate(false);
+        .catch()
+      setIsUpdate(false)
     }
-  }, [isUpdate]);
+  }, [isUpdate])
 
   return (
     <div>
       <Table columns={columns} datas={data} />
     </div>
-  );
+  )
 }
 
-export default AccountManager;
+export default AccountManager

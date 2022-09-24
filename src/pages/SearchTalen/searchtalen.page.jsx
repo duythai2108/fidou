@@ -1,178 +1,197 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { getAuthen, getParam } from "../../axios/authenfunction";
-import ProfileMini from "../../components/Profile-mini/ProfileMini.component";
-import API from "../../constans/api";
-import { AccountContext } from "../../context/AccountProvider";
-import "./searchtalen.style.scss";
+import React, { useContext, useEffect, useReducer, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { getAuthen, getParam } from '../../axios/authenfunction'
+import ProfileMini from '../../components/Profile-mini/ProfileMini.component'
+import API from '../../constans/api'
+import { AccountContext } from '../../context/AccountProvider'
+import './searchtalen.style.scss'
+
+import { yupResolver } from '@hookform/resolvers/yup'
+import yup from '../../validator/yup'
+import { useForm } from 'react-hook-form'
 
 const queryReducer = (state, action) => {
   switch (action.type) {
-    case "SET_FIELD":
-      console.log("dispatch" + action.payload.field);
-      state[action.payload.field] = action.payload.value;
+    case 'SET_FIELD':
+      console.log('dispatch' + action.payload.field)
+      state[action.payload.field] = action.payload.value
       return {
-        ...state,
-      };
+        ...state
+      }
     default:
-      return state;
+      return state
   }
-};
+}
+
+//  --- SCHEMA ---
+const validationSchema = yup.OBJECT({
+  SearchText: yup.FULL_NAME_NOT_REQUIRED,
+  minAge: yup.MIN_AGE,
+  maxAge: yup.MAX_AGE
+})
+//  --- END - SCHEMA ---
 
 function SearchTalen() {
-  let [categories, setCategories] = useState([]);
-  let [subCategories, setSubCategories] = useState([]);
-  let [candidates, setCandidates] = useState([]);
-  let [isFirstLoad, setIsFirstLoad] = useState(true);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const accountContext = useContext(AccountContext);
-  let { data } = accountContext;
+  let [categories, setCategories] = useState([])
+  let [subCategories, setSubCategories] = useState([])
+  let [candidates, setCandidates] = useState([])
+  let [isFirstLoad, setIsFirstLoad] = useState(true)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const accountContext = useContext(AccountContext)
+  let { data } = accountContext
   let [query, queryDispatch] = useReducer(queryReducer, {
-    category: "",
-    subCategory: "",
-    gender: "",
-    SearchText: "",
-    minAge: "",
-    maxAge: "",
-    accent: ""
-  });
+    category: '',
+    subCategory: '',
+    gender: '',
+    SearchText: '',
+    minAge: '',
+    maxAge: '',
+    accent: ''
+  })
+
+  //  --- APPLY SCHEMA TO FORM ---
+  const {
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
+    resolver: yupResolver(validationSchema)
+  })
+  //  --- END - APPLY SCHEMA TO FORM ---
 
   useEffect(() => {
-    getAuthen(API["GET_SUBCATEGORY"]).then((response) => {
-      setCategories(response.data.data);
-    });
-    getAuthen(API["GET_CATEGORY"]).then((response) => {
-      setSubCategories(response.data.data);
-    });
+    getAuthen(API['GET_SUBCATEGORY']).then(response => {
+      setCategories(response.data.data)
+    })
+    getAuthen(API['GET_CATEGORY']).then(response => {
+      setSubCategories(response.data.data)
+    })
     // console.log(searchParams.get("SubCategoryId"));
-  }, []);
+  }, [])
 
-  const search = (isButton) => {
-    let fullQuery = "?search=1";
+  const search = isButton => {
+    let fullQuery = '?search=1'
 
     // if (isFirstLoad) {
 
     // }
 
     // if (query.category != "") {
-    fullQuery += `&CategoryId=${query.category}`;
+    fullQuery += `&CategoryId=${query.category}`
     // }
 
     // if (query.subCategory != "" || searchParams.get("SubCategoryId")) {
-    fullQuery += `&SubCategoryId=${query.subCategory}`;
+    fullQuery += `&SubCategoryId=${query.subCategory}`
     // }
 
     // if (query.gender != "" || searchParams.get("Gender")) {
-    fullQuery += `&Gender=${query.gender}`;
-    fullQuery += `&SearchText=${query.SearchText}`;
+    fullQuery += `&Gender=${query.gender}`
+    fullQuery += `&SearchText=${query.SearchText}`
     // }
-    fullQuery += `&MinAge=${query.minAge}`;
-    fullQuery += `&MaxAge=${query.maxAge}`;
-    fullQuery += `&Accent=${query.accent}`;
-    console.log(fullQuery);
+    fullQuery += `&MinAge=${query.minAge}`
+    fullQuery += `&MaxAge=${query.maxAge}`
+    fullQuery += `&Accent=${query.accent}`
+    console.log(fullQuery)
 
-    getParam(API["GET_CANDIDATE_FILTER"], fullQuery).then((response) => {
-      console.log(response.data.data);
-      setCandidates(response.data.data);
-    });
+    getParam(API['GET_CANDIDATE_FILTER'], fullQuery).then(response => {
+      setCandidates(response.data.data)
+    })
 
     if (isButton) {
-      setSearchParams(fullQuery);
+      setSearchParams(fullQuery)
     }
     // if (!isFirstLoad) {
     //   setSearchParams(fullQuery);
     // } else {
     //   setIsFirstLoad(false);
     // }
-  };
+  }
 
   useEffect(() => {
     if (
-      searchParams.get("CategoryId") &&
-      query.category != searchParams.get("CategoryId")
+      searchParams.get('CategoryId') &&
+      query.category != searchParams.get('CategoryId')
     ) {
-      console.log("change");
+      console.log('change')
       queryDispatch({
-        type: "SET_FIELD",
+        type: 'SET_FIELD',
         payload: {
-          field: "category",
-          value: searchParams.get("CategoryId"),
-        },
-      });
+          field: 'category',
+          value: searchParams.get('CategoryId')
+        }
+      })
     }
 
     if (
-      searchParams.get("SubCategoryId") &&
-      query.subCategory != searchParams.get("SubCategoryId")
+      searchParams.get('SubCategoryId') &&
+      query.subCategory != searchParams.get('SubCategoryId')
     ) {
       queryDispatch({
-        type: "SET_FIELD",
+        type: 'SET_FIELD',
         payload: {
-          field: "subCategory",
-          value: searchParams.get("SubCategoryId"),
-        },
-      });
+          field: 'subCategory',
+          value: searchParams.get('SubCategoryId')
+        }
+      })
     }
 
     if (
-      searchParams.get("Gender") &&
-      query.gender != searchParams.get("Gender")
+      searchParams.get('Gender') &&
+      query.gender != searchParams.get('Gender')
     ) {
       queryDispatch({
-        type: "SET_FIELD",
+        type: 'SET_FIELD',
         payload: {
-          field: "gender",
-          value: searchParams.get("Gender"),
-        },
-      });
+          field: 'gender',
+          value: searchParams.get('Gender')
+        }
+      })
     }
 
     if (
-      searchParams.get("MinAge") &&
-      query.minAge != searchParams.get("MinAge")
+      searchParams.get('MinAge') &&
+      query.minAge != searchParams.get('MinAge')
     ) {
       queryDispatch({
-        type: "SET_FIELD",
+        type: 'SET_FIELD',
         payload: {
-          field: "minAge",
-          value: searchParams.get("MinAge"),
-        },
-      });
+          field: 'minAge',
+          value: searchParams.get('MinAge')
+        }
+      })
     }
 
     if (
-      searchParams.get("MaxAge") &&
-      query.maxAge != searchParams.get("MaxAge")
+      searchParams.get('MaxAge') &&
+      query.maxAge != searchParams.get('MaxAge')
     ) {
       queryDispatch({
-        type: "SET_FIELD",
+        type: 'SET_FIELD',
         payload: {
-          field: "maxAge",
-          value: searchParams.get("MaxAge"),
-        },
-      });
+          field: 'maxAge',
+          value: searchParams.get('MaxAge')
+        }
+      })
     }
-    
 
     if (
-      searchParams.get("SearchText") &&
-      query.SearchText != searchParams.get("SearchText")
+      searchParams.get('SearchText') &&
+      query.SearchText != searchParams.get('SearchText')
     ) {
       queryDispatch({
-        type: "SET_FIELD",
+        type: 'SET_FIELD',
         payload: {
-          field: "SearchText",
-          value: searchParams.get("SearchText"),
-        },
-      });
+          field: 'SearchText',
+          value: searchParams.get('SearchText')
+        }
+      })
     }
-  }, [searchParams]
-  );
-
+  }, [searchParams])
 
   useEffect(() => {
-    search();
-  }, [query]);
+    search()
+  }, [query])
 
   return (
     <div className="search-talen">
@@ -181,15 +200,15 @@ function SearchTalen() {
           <h3>Tất cả dịch vụ</h3>
           <div className="list-service">
             <h4
-              className={query?.category == "" ? "active" : ""}
+              className={query?.category == '' ? 'active' : ''}
               onClick={() => {
                 queryDispatch({
-                  type: "SET_FIELD",
+                  type: 'SET_FIELD',
                   payload: {
-                    field: "category",
-                    value: "",
-                  },
-                });
+                    field: 'category',
+                    value: ''
+                  }
+                })
               }}
             >
               Tất cả
@@ -197,20 +216,20 @@ function SearchTalen() {
             {subCategories.map((item, index) => {
               return (
                 <h4
-                  className={query?.category == item.id ? "active" : ""}
+                  className={query?.category == item.id ? 'active' : ''}
                   onClick={() => {
                     queryDispatch({
-                      type: "SET_FIELD",
+                      type: 'SET_FIELD',
                       payload: {
-                        field: "category",
-                        value: item.id,
-                      },
-                    });
+                        field: 'category',
+                        value: item.id
+                      }
+                    })
                   }}
                 >
                   {item.name}
                 </h4>
-              );
+              )
             })}
           </div>
         </div>
@@ -219,14 +238,14 @@ function SearchTalen() {
           <select
             name=""
             id=""
-            onChange={(e) => {
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "subCategory",
-                  value: e.target.value,
-                },
-              });
+                  field: 'subCategory',
+                  value: e.target.value
+                }
+              })
             }}
             value={query.subCategory}
           >
@@ -235,14 +254,14 @@ function SearchTalen() {
             </option>
             {categories
               .filter(
-                (i) => i.categoryId == query.category || query.category == ""
+                i => i.categoryId == query.category || query.category == ''
               )
               .map((category, index) => {
                 return (
                   <option value={category.id} key={index}>
                     {category.name}
                   </option>
-                );
+                )
               })}
           </select>
         </div>
@@ -250,18 +269,21 @@ function SearchTalen() {
         <div className="item">
           <h3>Tên ứng viên</h3>
           <input
+            {...register('SearchText')}
+            className={`${!!errors.SearchText ? 'errorInput' : ''}`}
             type="text"
             value={query.SearchText}
-            onChange={(e) => {
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "SearchText",
-                  value: e.target.value,
-                },
-              });
+                  field: 'SearchText',
+                  value: e.target.value
+                }
+              })
             }}
           />
+          <p className="errorMessage">{errors.SearchText?.message}</p>
         </div>
 
         <div className="item">
@@ -280,30 +302,41 @@ function SearchTalen() {
             }}
           />  */}
           <input
+            {...register('minAge')}
+            className={`${!!errors.minAge ? 'errorInput' : ''}`}
             type="number"
-            onChange={(e) => {
+            min="0"
+            max="100"
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "minAge",
-                  value: e.target.value,
-                },
-              });
+                  field: 'minAge',
+                  value: e.target.value
+                }
+              })
             }}
           />
-          <h3>đến</h3>  
+          <p className="errorMessage">{errors.minAge?.message}</p>
+
+          <h3>đến</h3>
           <input
+            {...register('maxAge')}
+            className={`${!!errors.maxAge ? 'errorInput' : ''}`}
             type="number"
-            onChange={(e) => {
+            min="0"
+            max="100"
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "maxAge",
-                  value: e.target.value,
-                },
-              });
+                  field: 'maxAge',
+                  value: e.target.value
+                }
+              })
             }}
-          /> 
+          />
+          <p className="errorMessage">{errors.maxAge?.message}</p>
         </div>
 
         <div className="item">
@@ -312,14 +345,14 @@ function SearchTalen() {
             name=""
             id=""
             value={query.gender}
-            onChange={(e) => {
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "gender",
-                  value: e.target.value,
-                },
-              });
+                  field: 'gender',
+                  value: e.target.value
+                }
+              })
             }}
           >
             <option selected value="">
@@ -336,31 +369,23 @@ function SearchTalen() {
             name=""
             id=""
             value={query.accent}
-            onChange={(e) => {
+            onChange={e => {
               queryDispatch({
-                type: "SET_FIELD",
+                type: 'SET_FIELD',
                 payload: {
-                  field: "accent",
-                  value: e.target.value,
-                },
-              });
+                  field: 'accent',
+                  value: e.target.value
+                }
+              })
             }}
           >
             <option selected value="">
               Tất cả
             </option>
-            <option value="0">
-                  Miền bắc
-                </option>
-                <option value="1">
-                  Miền trung
-                </option>
-                <option value="2">
-                  Miền nam
-                </option>
-                <option value="3">
-                  Miền tây
-                </option>
+            <option value="0">Miền bắc</option>
+            <option value="1">Miền trung</option>
+            <option value="2">Miền nam</option>
+            <option value="3">Miền tây</option>
           </select>
         </div>
         {/* <div className="item">
@@ -402,16 +427,16 @@ function SearchTalen() {
         {candidates.map((item, index) => {
           return (
             <ProfileMini data={item} isShowInvite={data.account?.role == 1} />
-          );
+          )
         })}
         {!candidates || candidates?.length == 0 ? (
           <p>Không có ứng cử viên nào!</p>
         ) : (
-          ""
+          ''
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default SearchTalen;
+export default SearchTalen

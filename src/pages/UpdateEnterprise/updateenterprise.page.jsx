@@ -322,7 +322,7 @@ function UpdateEnterprise() {
             type: 'SET_DATA',
             payload: response.data.data
           })
-          reset(fields)
+          reset(response.data.data)
         })
         .catch(() => {
           reset({
