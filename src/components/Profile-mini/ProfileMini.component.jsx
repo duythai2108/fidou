@@ -1,55 +1,56 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { Modal, Radio } from "antd";
-import "./profilemini.style.scss";
-import { getAuthen, postAuthen } from "../../axios/authenfunction";
-import API from "../../constans/api";
-import Swal from "sweetalert2";
+import React, { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Modal, Radio } from 'antd'
+import './profilemini.style.scss'
+import { getAuthen, postAuthen } from '../../axios/authenfunction'
+import API from '../../constans/api'
+import Swal from 'sweetalert2'
+import Rating from '@mui/material/Rating'
+
 function ProfileMini({ data, isShowInvite }) {
-  const onChange = (e) => {
-    setValue(e.target.value);
-  };
-  let [isShowAddJob, setIsShowAddJob] = useState(false);
-  const [value, setValue] = useState(1);
+  const onChange = e => {
+    setValue(e.target.value)
+  }
+  let [isShowAddJob, setIsShowAddJob] = useState(false)
+  const [value, setValue] = useState(1)
   let [prepareData, setPrepareData] = useState({
     sub: [],
     demos: [],
     account: [],
-    jobs: [],
-  });
-  let title2 = useRef(null);
-  let description2 = useRef(null);
-  let day = useRef(null);
-  let hours = useRef(null);
-  let minute = useRef(null);
-  let price = useRef(null);
-  let tone = useRef(null);
-  let minAge = useRef(null);
-  let maxAge = useRef(null);
-  let gender = useRef(null);
-  let language = useRef(null);
-
+    jobs: []
+  })
+  let title2 = useRef(null)
+  let description2 = useRef(null)
+  let day = useRef(null)
+  let hours = useRef(null)
+  let minute = useRef(null)
+  let price = useRef(null)
+  let tone = useRef(null)
+  let minAge = useRef(null)
+  let maxAge = useRef(null)
+  let gender = useRef(null)
+  let language = useRef(null)
 
   useEffect(() => {
-    getAuthen(API["GET_SUBCATEGORY"]).then((response) => {
+    getAuthen(API['GET_SUBCATEGORY']).then(response => {
       setPrepareData({
-        sub: response.data.data,
-      });
-    });
-  }, []);
+        sub: response.data.data
+      })
+    })
+  }, [])
 
   const handelAddJob = () => {
-    const txtTitle = title2.current.value;
-    const txtDescription = description2.current.value;
-    const txtDay = day.current.value;
-    const txtHours = hours.current.value;
-    const txtMinute = minute.current.value;
-    const txtPrice = price.current.value;
-    const txtTone = tone.current.value;
-    const txtMinAge = minAge.current.value;
-    const txtMaxAge = maxAge.current.value;
-    const txtGender = gender.current.value;
-    const txtLanguage = language.current.value;
+    const txtTitle = title2.current.value
+    const txtDescription = description2.current.value
+    const txtDay = day.current.value
+    const txtHours = hours.current.value
+    const txtMinute = minute.current.value
+    const txtPrice = price.current.value
+    const txtTone = tone.current.value
+    const txtMinAge = minAge.current.value
+    const txtMaxAge = maxAge.current.value
+    const txtGender = gender.current.value
+    const txtLanguage = language.current.value
 
     const dataa = {
       jobPayload: {
@@ -66,59 +67,59 @@ function ProfileMini({ data, isShowInvite }) {
         gender: new Number(txtGender),
         language: new Number(txtLanguage)
       },
-      candidateId: data.id,
-    };
+      candidateId: data.id
+    }
 
-    postAuthen(API["INVITE_TO_JOB"], dataa, true)
-      .then((response) => {
-        setIsShowAddJob(false);
-        Swal.fire("Thông báo", "Mời thành công!", "success");
+    postAuthen(API['INVITE_TO_JOB'], dataa, true)
+      .then(response => {
+        setIsShowAddJob(false)
+        Swal.fire('Thông báo', 'Mời thành công!', 'success')
       })
-      .catch((error) => {
+      .catch(error => {
         Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: error.response.data.msg,
-        });
-      });
-  };
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.msg
+        })
+      })
+  }
 
   const createSchedule = async () => {
     const { value: formValues } = await Swal.fire({
-      title: "Báo cáo ứng cử viên",
+      title: 'Báo cáo ứng cử viên',
       html: `
               <input type="datetime-local"  id="swal-input1">
         `,
       showCancelButton: true,
       focusConfirm: false,
-      confirmButtonText: "Tạo lịch hẹn",
+      confirmButtonText: 'Tạo lịch hẹn',
       preConfirm: () => {
         return {
           candidateId: data.id,
-          scheduledTime: document.getElementById("swal-input1").value,
-        };
-      },
-    });
+          scheduledTime: document.getElementById('swal-input1').value
+        }
+      }
+    })
 
     if (formValues) {
-      postAuthen(API["POST_SCHEDULE"], formValues, true)
-        .then((response) => {
+      postAuthen(API['POST_SCHEDULE'], formValues, true)
+        .then(response => {
           Swal.fire(
-            "Thông báo!",
-            "Tạo lịch hẹn với ứng viên thành công",
-            "success"
-          );
+            'Thông báo!',
+            'Tạo lịch hẹn với ứng viên thành công',
+            'success'
+          )
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(error => {
+          console.log(error)
           Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Đặt lịch không thành công!",
-          });
-        });
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Đặt lịch không thành công!'
+          })
+        })
     }
-  };
+  }
   return (
     <div className="profile-mini box">
       <div className="left">
@@ -129,12 +130,13 @@ function ProfileMini({ data, isShowInvite }) {
           <h3>{data.name}</h3>
         </Link>
         <p>{data.description}</p>
+        <Rating name="read-only" value={data.averageReviewPoint} readOnly />
         {isShowInvite ? (
           <div className="wrapper">
             <button
               className="button"
               onClick={() => {
-                setIsShowAddJob(true);
+                setIsShowAddJob(true)
               }}
             >
               Mời vào dự án
@@ -151,7 +153,7 @@ function ProfileMini({ data, isShowInvite }) {
             </button> */}
           </div>
         ) : (
-          ""
+          ''
         )}
       </div>
       <Modal
@@ -176,30 +178,30 @@ function ProfileMini({ data, isShowInvite }) {
                       <Radio value={item.id} key={index}>
                         {item.name}
                       </Radio>
-                    );
+                    )
                   })
-                : ""}
+                : ''}
             </Radio.Group>
           </div>
           <h3>
-              Ngôn ngữ yêu cầu cho ứng viên <span>*</span>
+            Ngôn ngữ yêu cầu cho ứng viên <span>*</span>
           </h3>
           <select ref={language}>
-              <option disabled selected value>
-                  -- Chọn --
-              </option>
-              <option value="0">Tiếng Việt</option>
-              <option value="1">Tiếng Anh</option>
+            <option disabled selected value>
+              -- Chọn --
+            </option>
+            <option value="0">Tiếng Việt</option>
+            <option value="1">Tiếng Anh</option>
           </select>
           <h3>
-               Giới tính yêu cầu cho ứng viên <span>*</span>
+            Giới tính yêu cầu cho ứng viên <span>*</span>
           </h3>
           <select ref={gender}>
-              <option disabled selected value>
-                -- Chọn --
-              </option>
-              <option value="0">Nam</option>
-              <option value="1">Nữ</option>
+            <option disabled selected value>
+              -- Chọn --
+            </option>
+            <option value="0">Nam</option>
+            <option value="1">Nữ</option>
           </select>
           <h3>
             Tone <span>*</span>
@@ -214,10 +216,13 @@ function ProfileMini({ data, isShowInvite }) {
           </select>
         </div>
         <div className="box">
-            <div className="row">
-                <h3>Độ tuổi <span>*</span></h3>
-                <input type="number" min = "18" ref={minAge}/> -  <input type="number" min = "18" ref={maxAge}/>
-            </div>
+          <div className="row">
+            <h3>
+              Độ tuổi <span>*</span>
+            </h3>
+            <input type="number" min="18" ref={minAge} /> -{' '}
+            <input type="number" min="18" ref={maxAge} />
+          </div>
         </div>
         <div className="modal-adddemo__description box">
           <h3>
@@ -260,7 +265,7 @@ function ProfileMini({ data, isShowInvite }) {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ProfileMini;
+export default ProfileMini

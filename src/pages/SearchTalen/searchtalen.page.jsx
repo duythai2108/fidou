@@ -95,7 +95,6 @@ function SearchTalen() {
     console.log(fullQuery)
 
     getParam(API['GET_CANDIDATE_FILTER'], fullQuery).then(response => {
-      console.log(response.data.data)
       setCandidates(response.data.data)
     })
 
