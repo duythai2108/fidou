@@ -1,21 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { getAuthen, getParam } from "../../axios/authenfunction";
-import API from "../../constans/api";
-import TalenCard from "../TalenCard/talencard.component";
-import "./talenlist.style.scss";
+import React, { useEffect, useState } from 'react'
+import { getAuthen, getParam } from '../../axios/authenfunction'
+import API from '../../constans/api'
+import TalenCard from '../TalenCard/talencard.component'
+import './talenlist.style.scss'
 function TalenList() {
-  const [candidates, setCandidates] = useState([]);
+  const [candidates, setCandidates] = useState([])
   useEffect(() => {
-    console.log("run");
-    getAuthen(API["GET_LIST_CANDIDATE"] + "?pageSize=6&pageNumber=1").then(
-      (response) => {
-        setCandidates(response.data.data);
+    console.log('run')
+    getAuthen(API['GET_LIST_CANDIDATE'] + '?pageSize=6&pageNumber=1').then(
+      response => {
+        setCandidates(response.data.data)
       }
-    );
-  }, []);
+    )
+  }, [])
 
   return (
     <div className="talenlist">
+      <div className="talenlist__header">
+        <p className="talenlist__header__title">
+          Duyệt các tài năng hoặc dự án hàng đầu
+        </p>
+        <p className="talenlist__header__desc">
+          Thuê những tài năng hoàn hảo và làm việc sát cánh với họ để mang công
+          việc của bạn đến với cuộc sống. Hoặc là bỏ qua dự đoán bằng cách mua
+          dự án mua các dự án với chi phí và thời gian trả trước.
+        </p>
+      </div>
+
       <h1>Các ứng viên hàng đầu</h1>
 
       <div className="talenlist__list">
@@ -29,11 +40,11 @@ function TalenList() {
               demo={item.voiceDemos.length > 0 ? item.voiceDemos[0] : null}
               rate={item.averageReviewPoint}
             />
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }
 
-export default TalenList;
+export default TalenList
