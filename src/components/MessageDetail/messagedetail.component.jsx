@@ -59,14 +59,9 @@ function MessageDetail({ onRoom }) {
           setUser([...user])
         } else if (!isExist) {
           if (id) {
-            console.log('id: ', id)
             myAxios
               .get(`${API['GET_CANDIDATE_INFO']}${id}`)
               .then(res => {
-                console.log(
-                  `TinNguyen:  ===> file: messagedetail.component.jsx ===> line 66 ===> res`,
-                  res.data.data
-                )
                 setCandidate(res.data?.data)
               })
               .catch(error => {

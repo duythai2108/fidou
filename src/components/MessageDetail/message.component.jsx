@@ -7,17 +7,23 @@ function Message({ candidate, text, createAt, isMe, type, src, user, status }) {
     <div className={`message ${isMe ? 'me' : ''}`}>
       <div className="wrapper">
         <div>
-          <Tooltip title={isMe ? user?.name : candidate?.name}>
-            <Avatar
-              src={
-                isMe
-                  ? user?.avatarUrl
+          {candidate ? (
+            <Tooltip title={isMe ? user?.name : candidate?.name}>
+              <Avatar
+                src={
+                  isMe
                     ? user?.avatarUrl
-                    : user?.logoUrl
-                  : candidate?.avatarUrl
-              }
-            />
-          </Tooltip>
+                      ? user?.avatarUrl
+                      : user?.logoUrl
+                    : candidate?.avatarUrl
+                }
+              />
+            </Tooltip>
+          ) : (
+            <Tooltip title={user?.name}>
+              <Avatar src={user?.avatarUrl ? user?.avatarUrl : user?.logoUrl} />
+            </Tooltip>
+          )}
         </div>
         <div className="message__text">
           <Tooltip title={createAt}>
