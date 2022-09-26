@@ -1,0 +1,70 @@
+@import "../../styles/variable.scss";
+
+.homeBrand {
+  padding: 80px 300px;
+  background-color: #fff;
+
+  border-bottom: 1px solid #c9d0d9;
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 32px;
+  }
+
+  &__col {
+
+  }
+
+  &__desc {
+    text-align: center;
+    color: #4f5963;
+    font-weight: 400;
+    line-height: 1.5;
+    font-size: 16px;
+    margin-bottom: 0px;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+
+
+    &__item {
+      min-width: 99px;
+
+      & img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1750px) {
+  .homeBrand {
+    padding: 30px 100px;
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  .homeBrand {
+    padding: 30px 50px;
+
+   
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .homeBrand {
+    padding: 30px 20px;
+
+  }
+}

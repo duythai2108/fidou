@@ -1,0 +1,130 @@
+@import "../../styles/variable.scss";
+
+.homeInfoWrapper {
+  background-color: #fff;
+  padding: 80px 300px;
+
+  &__title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.25;
+
+    margin: 16px 0px 56px;
+  }
+
+  &__row {
+    justify-content: space-between;
+  }
+
+  &__col {
+
+  }
+}
+
+.homeInfoValue {
+  display: flex;
+  flex-direction: column;
+  row-gap: 56px;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 24px;
+    
+    &__icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      & > img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    &__content {
+      &__title {
+        font-weight: 500;
+        color: #19222b;
+        font-size: 20px;
+        line-height: 1.25;
+        margin-bottom: 8px;
+      }
+      &__desc {
+        color: #19222b; 
+        font-weight: 400;
+        font-size: 18px;
+        margin-bottom: 0px;
+        & > a {
+          font-weight: 500;
+          color: #1171bb;
+          &:hover {
+            text-decoration-skip-ink: auto;
+            border-bottom: 1px solid #004a81;
+            color: #004a81;
+          }
+        }
+      }
+    }
+  }
+}
+
+.homeInfoCard {
+  padding: 32px;
+  border-radius: 8px;
+  box-shadow: 0 5px 12px 0 rgb(25 34 43 / 10%);
+  margin-right: 0;
+  margin-left: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 32px;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    
+    &__title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #19222b;
+      line-height: 1.5;
+      margin-bottom: 0px;
+    }
+  
+    &__desc {
+      color: #4f5963;
+      font-size: 18px;
+      margin-bottom: 0px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1750px) {
+  .homeInfoWrapper {
+    padding: 30px 100px;
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  .homeInfoWrapper {
+    padding: 30px 50px;
+
+   
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .homeInfoWrapper {
+    padding: 30px 20px;
+
+  }
+}
