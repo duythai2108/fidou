@@ -5,6 +5,7 @@ import ProfileMini from '../../components/Profile-mini/ProfileMini.component'
 import API from '../../constans/api'
 import { AccountContext } from '../../context/AccountProvider'
 import './searchtalen.style.scss'
+import Pagination from '@mui/material/Pagination'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import yup from '../../validator/yup'
@@ -13,7 +14,6 @@ import { useForm } from 'react-hook-form'
 const queryReducer = (state, action) => {
   switch (action.type) {
     case 'SET_FIELD':
-      console.log('dispatch' + action.payload.field)
       state[action.payload.field] = action.payload.value
       return {
         ...state
@@ -49,6 +49,12 @@ function SearchTalen() {
     accent: ''
   })
 
+  // Pagination
+  const [currentPage, setCurrentPage] = React.useState(0)
+  const [pageSize, setPageSize] = React.useState(6)
+  const [totalCount, setTotalCount] = React.useState(0)
+  const [totalPage, setTotalPage] = React.useState(0)
+
   //  --- APPLY SCHEMA TO FORM ---
   const {
     register,
@@ -67,7 +73,6 @@ function SearchTalen() {
     getAuthen(API['GET_CATEGORY']).then(response => {
       setSubCategories(response.data.data)
     })
-    // console.log(searchParams.get("SubCategoryId"));
   }, [])
 
   const search = isButton => {
@@ -92,10 +97,11 @@ function SearchTalen() {
     fullQuery += `&MinAge=${query.minAge}`
     fullQuery += `&MaxAge=${query.maxAge}`
     fullQuery += `&Accent=${query.accent}`
-    console.log(fullQuery)
+    console.log('fullQuery: ', fullQuery)
 
     getParam(API['GET_CANDIDATE_FILTER'], fullQuery).then(response => {
       setCandidates(response.data.data)
+      console.log('response.data: ', response.data)
     })
 
     if (isButton) {
@@ -113,7 +119,6 @@ function SearchTalen() {
       searchParams.get('CategoryId') &&
       query.category != searchParams.get('CategoryId')
     ) {
-      console.log('change')
       queryDispatch({
         type: 'SET_FIELD',
         payload: {
@@ -434,6 +439,10 @@ function SearchTalen() {
         ) : (
           ''
         )}
+
+        <div className="paginationWrapper">
+          <Pagination count={10} />
+        </div>
       </div>
     </div>
   )
