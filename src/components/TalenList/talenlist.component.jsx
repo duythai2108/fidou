@@ -22,8 +22,8 @@ function TalenList() {
         </p>
         <p className="talenlist__header__desc">
           Thuê những tài năng hoàn hảo và làm việc sát cánh với họ để mang công
-          việc của bạn đến với cuộc sống. Hoặc là bỏ qua dự đoán bằng cách mua
-          dự án mua các dự án với chi phí và thời gian trả trước.
+          việc của bạn đến với cuộc sống. Hoặc là có thể tự kiếm mình một công việc
+          bằng giọng nói của mình
         </p>
       </div>
 

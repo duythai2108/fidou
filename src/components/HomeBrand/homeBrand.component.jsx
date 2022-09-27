@@ -7,7 +7,7 @@ const HomeBrand = props => {
       <div className="homeBrand__row">
         <p className="homeBrand__col homeBrand__desc">
           Các nhóm sáng tạo, nhà tiếp thị, nhà sản xuất và người hướng dẫn từ
-          các thương hiệu và đại lý lớn nhất thế giới tin tưởng Voices với các
+          các thương hiệu và đại lý lớn nhất thế giới tin tưởng FIDOU với các
           dự án của họ.
         </p>
         <div className="homeBrand__col homeBrand__list">
