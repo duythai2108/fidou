@@ -745,10 +745,11 @@ function Profile() {
 
           {prepareData.account?.reviews ? (
             <div className="comment-list aaaa">
+              <h3>Đánh giá của nhà tuyển dụng</h3>
               {prepareData.account?.reviews?.map((item) => {
                 const date = new Date(item.createdTime).toLocaleDateString();
-                return (
-                  <Comment
+                return (                
+                  <Comment                
                     date={date}
                     value={item.reviewPoint}
                     content={item.content}
