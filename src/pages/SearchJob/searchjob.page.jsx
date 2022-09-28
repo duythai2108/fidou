@@ -5,6 +5,7 @@ import JobDetail from '../../components/JobDetail/jobdetail.component'
 import API from '../../constans/api'
 import { AccountContext } from '../../context/AccountProvider'
 import './searchjob.style.scss'
+import Pagination from '@mui/material/Pagination'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import yup from '../../validator/yup'
@@ -31,6 +32,8 @@ const validationSchema = yup.OBJECT({
 })
 //  --- END - SCHEMA ---
 
+const PAGE_SIZE = 6
+
 const SearchJob = () => {
   let [categories, setCategories] = useState([])
   let [subCategories, setSubCategories] = useState([])
@@ -47,6 +50,10 @@ const SearchJob = () => {
     minAge: '',
     maxAge: ''
   })
+  // Pagination
+  const [page, setPage] = React.useState(1)
+  const [count, setCount] = React.useState(null)
+  const ref = React.useRef(null)
 
   //  --- APPLY SCHEMA TO FORM ---
   const {
@@ -102,7 +109,13 @@ const SearchJob = () => {
     getParam(API['GET_JOB_FILTER'], fullQuery).then(response => {
       console.log(response.data.data)
       setCandidates(response.data.data)
+      setCount(Math.round(response.data?.data.length / PAGE_SIZE))
     })
+  }
+
+  const handleChangePage = (event, value) => {
+    setPage(value)
+    ref.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   useEffect(() => {
@@ -120,7 +133,7 @@ const SearchJob = () => {
   }, [])
 
   return (
-    <div className="search-job">
+    <div className="search-job" ref={ref}>
       <div className="left">
         <div className="item">
           <h3>Tất cả dịch vụ</h3>
@@ -322,29 +335,37 @@ const SearchJob = () => {
       </div>
       <div className="right">
         <h2>Danh sách công việc</h2>
-        {candidates.map((item, index) => {
-          return (
-            <Job
-              title={item.name}
-              description={item.description}
-              key={index}
-              day={item.dayDuration}
-              hours={item.hourDuration}
-              minute={item.minuteDuration}
-              price={item.price}
-              id={item.id}
-              listTalen={item.orders}
-              jobId={item.id}
-              jobName={item.name}
-              tone={item.tone}
-              gender={item.gender}
-              minAg={item.minAge}
-              maxAge={item.maxAge}
-              jobStatus={item.jobStatus}
-              showAddtofavorite={data?.account?.role == '0'}
-            />
-          )
-        })}
+        {[...candidates]
+          .slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page)
+          .map((item, index) => {
+            return (
+              <Job
+                title={item.name}
+                description={item.description}
+                key={index}
+                day={item.dayDuration}
+                hours={item.hourDuration}
+                minute={item.minuteDuration}
+                price={item.price}
+                id={item.id}
+                listTalen={item.orders}
+                jobId={item.id}
+                jobName={item.name}
+                tone={item.tone}
+                gender={item.gender}
+                minAg={item.minAge}
+                maxAge={item.maxAge}
+                jobStatus={item.jobStatus}
+                showAddtofavorite={data?.account?.role == '0'}
+              />
+            )
+          })}
+
+        {count && (
+          <div className="paginationWrapper">
+            <Pagination count={count} page={page} onChange={handleChangePage} />
+          </div>
+        )}
       </div>
     </div>
   )
