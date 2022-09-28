@@ -31,6 +31,8 @@ const validationSchema = yup.OBJECT({
 })
 //  --- END - SCHEMA ---
 
+const PAGE_SIZE = 6
+
 function SearchTalen() {
   let [categories, setCategories] = useState([])
   let [subCategories, setSubCategories] = useState([])
@@ -48,12 +50,10 @@ function SearchTalen() {
     maxAge: '',
     accent: ''
   })
-
   // Pagination
-  const [currentPage, setCurrentPage] = React.useState(0)
-  const [pageSize, setPageSize] = React.useState(6)
-  const [totalCount, setTotalCount] = React.useState(0)
-  const [totalPage, setTotalPage] = React.useState(0)
+  const [page, setPage] = React.useState(1)
+  const [count, setCount] = React.useState(null)
+  const ref = React.useRef(null)
 
   //  --- APPLY SCHEMA TO FORM ---
   const {
@@ -101,7 +101,7 @@ function SearchTalen() {
 
     getParam(API['GET_CANDIDATE_FILTER'], fullQuery).then(response => {
       setCandidates(response.data.data)
-      console.log('response.data: ', response.data)
+      setCount(Math.round(response.data?.data.length / PAGE_SIZE))
     })
 
     if (isButton) {
@@ -112,6 +112,11 @@ function SearchTalen() {
     // } else {
     //   setIsFirstLoad(false);
     // }
+  }
+
+  const handleChangePage = (event, value) => {
+    setPage(value)
+    ref.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   useEffect(() => {
@@ -199,7 +204,7 @@ function SearchTalen() {
   }, [query])
 
   return (
-    <div className="search-talen">
+    <div className="search-talen" ref={ref}>
       <div className="left">
         <div className="item">
           <h3>Tất cả dịch vụ</h3>
@@ -429,20 +434,28 @@ function SearchTalen() {
       </div>
       <div className="right">
         <h2>Danh sách ứng viên</h2>
-        {candidates.map((item, index) => {
-          return (
-            <ProfileMini data={item} isShowInvite={data.account?.role == 1} />
-          )
-        })}
+        {[...candidates]
+          .slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page)
+          .map((item, index) => {
+            return (
+              <ProfileMini
+                data={item}
+                isShowInvite={data.account?.role == 1}
+                key={index}
+              />
+            )
+          })}
         {!candidates || candidates?.length == 0 ? (
           <p>Không có ứng cử viên nào!</p>
         ) : (
           ''
         )}
 
-        <div className="paginationWrapper">
-          <Pagination count={10} />
-        </div>
+        {count && (
+          <div className="paginationWrapper">
+            <Pagination count={count} page={page} onChange={handleChangePage} />
+          </div>
+        )}
       </div>
     </div>
   )

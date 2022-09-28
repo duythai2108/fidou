@@ -62,4 +62,11 @@
   .errorMessage {
     color: #df4759;
   }
+
+  .paginationWrapper {
+    padding-top: 16px;
+    & .MuiPagination-ul {
+      justify-content: flex-end;
+    }
+  }
 }
