@@ -54,7 +54,7 @@ const HomeInfo = props => {
                   Giọng nói chất lượng cao, trong phạm vi ngân sách của bạn
                 </p>
                 <p className="homeInfoValue__item__content__desc">
-                  Nhận báo giá và thử giọng tùy chỉnh miễn phí và chọn diễn viên
+                  Nghe thử giọng đọc miễn phí và chọn ứng viên
                   lồng tiếng tốt nhất phù hợp với dự án của bạn.
                   <a href="#">Tìm hiểu về giá cả.</a>
                 </p>

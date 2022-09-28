@@ -676,7 +676,7 @@ function Header() {
                           id="checkbox"
                           {...registerR('acceptCheckbox')}
                         />
-                        <label htmlFor="checkbox">Chấp nhận điểu khoảng.</label>
+                        <label htmlFor="checkbox">Chấp nhận điều khoản.</label>
                         <Link
                           to="/policy"
                           onClick={() => {

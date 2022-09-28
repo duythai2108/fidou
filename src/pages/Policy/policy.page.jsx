@@ -5,7 +5,7 @@ const Policy = () => {
     <div className="policy-page">
       <h2>Điều khoản khi tham gian sàn giao dịch việc làm FIDOU</h2>
       <div className="list">
-        <h3>Điều khoảng 1:</h3>
+        <h3>Điều khoản 1:</h3>
         <p>
           Mọi cá nhân đều phải có trách nhiệm đối với thông tin bài đăng của mình và cá nhân tham gia
           phải đủ 18 tuổi.
@@ -24,7 +24,7 @@ const Policy = () => {
         </p>
       </div>
       <div className="list">
-        <h3>Điều khoảng 2:</h3>
+        <h3>Điều khoản 2:</h3>
         <p>
           Tiền kí quỹ là số tiền đảm bảo sự công bằng cho mỗi cá nhân tham gia,sẽ được hoàn trả sau khi ứng viên hoàn thành công việc
         </p>
@@ -34,7 +34,7 @@ const Policy = () => {
        
       </div>
       <div className="list">
-        <h3>Điều khoảng 3:</h3>
+        <h3>Điều khoản 3:</h3>
         <p color="red">
           Quyết định cuối cùng khi xảy ra tranh chấp sẽ thuộc quyền quyết định của quản trị viên FIDOU
         </p>
