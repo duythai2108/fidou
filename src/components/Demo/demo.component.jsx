@@ -36,8 +36,8 @@ function Demo({ title, src, sub, description, tone, script }) {
         </div>
         {convertTone(tone)}
       </div>
-      <strong>Auto Script(Dịch vụ AI tự động chuyển đổi từ giọng nói sang văn bản có thể không chính xác hoàn toàn):</strong>
-      <p>{script}</p>
+      {/* <strong>Auto Script(Dịch vụ AI tự động chuyển đổi từ giọng nói sang văn bản có thể không chính xác hoàn toàn):</strong>
+      <p>{script}</p> */}
       <strong>Mô tả:</strong>
       <p>{description}</p>
     </div>

@@ -70,7 +70,7 @@ const JobDetail = () => {
         createRoom(
           enterprise.id,
           data.account?.id,
-          `Phòng trao đổi ${dataResponse.jobInvitation.job.name} (Mời vào làm việc)`,
+          `Phòng trao đổi công việc ${dataResponse.jobInvitation.job.name} (Mời vào làm việc)`,
           dataResponse.transaction.order.id
         )
         setJob({

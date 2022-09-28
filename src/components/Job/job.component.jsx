@@ -86,7 +86,7 @@ function Job({
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Something went wrong!",
+          text: "Bạn đã đánh giá ứng viên này rồi!",
         });
       });
     setIsModalVisible(false);
@@ -110,7 +110,7 @@ function Job({
       if (result.isConfirmed) {
         deleteAuthen(API["DELETE_JOB"] + id, true)
           .then((response) => {
-            Swal.fire("Thông báo", "Xóa job thành công!", "success");
+            Swal.fire("Thông báo", "Xóa công việc thành công!", "success");
             setDeleteId(id);
           })
           .catch((error) => {
@@ -241,7 +241,7 @@ function Job({
         createRoom(
           response.data.data.candidateId,
           data.account.id,
-          "Phòng trao đổi " + jobName,
+          "Phòng trao đổi công việc " + jobName,
           orderId
         );
       });
@@ -434,10 +434,10 @@ function Job({
       {data.account && data.account?.id == username && status == 0 ? (
         <div className="edit">
           <button clasName="delete" onClick={handleDelete}>
-            delete
+            Xóa
           </button>
           <button className="update" onClick={showEdit}>
-            update 
+            Cập nhật 
           </button>
         </div>
       ) : (

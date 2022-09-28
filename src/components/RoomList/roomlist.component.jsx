@@ -9,7 +9,7 @@ function RoomList({ room, setOnRoom, onRoom }) {
   return (
     <div className="roomlist">
       <Collapse ghost defaultActiveKey={1} className="roomlist__collapse">
-        <Panel header="Danh sách phòng chat" key={1}>
+        <Panel header="Danh sách các phòng làm việc" key={1}>
           <div className="roomlist__collapse__search">
             <SearchOutlined />
             <input type="text" placeholder="Search room" />

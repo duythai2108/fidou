@@ -184,7 +184,7 @@ function Profile() {
         .then((response) => {
           console.log(response.data.data);
           setIsShowAddJob(false);
-          Swal.fire("Thông báo", "Update job thành công!", "success");
+          Swal.fire("Thông báo", "Cập nhật công việc thành công!", "success");
           const {
             dayDuration,
             description,
