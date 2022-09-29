@@ -81,7 +81,6 @@ const Wallet = () => {
         <table border={1}>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Số tiền</th>
               <th>Thời gian</th>
               <th>Loại giao dịch</th>
@@ -93,7 +92,6 @@ const Wallet = () => {
               console.log(date)
               return (
                 <tr>
-                  <td>{item.adminId}</td>
                   <td>{item.amount}</td>
                   <td>{date.toDateString()}</td>
                   <td>{TRANSACTION_TYPE[item.transactionType]}</td>
