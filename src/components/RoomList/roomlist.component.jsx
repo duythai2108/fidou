@@ -12,7 +12,7 @@ function RoomList({ room, setOnRoom, onRoom }) {
         <Panel header="Danh sách các phòng làm việc" key={1}>
           <div className="roomlist__collapse__search">
             <SearchOutlined />
-            <input type="text" placeholder="Search room" />
+            <input type="text" placeholder="Tìm phòng" />
           </div>
           {room.map((item, index) => {
             return (

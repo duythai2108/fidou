@@ -366,10 +366,10 @@ function Job({
         </div>
         <p>{description}</p>
         <div className="">
-          {day ? <LabelStatus label={day + " day"} state={"info"} /> : ""}
-          {hours ? <LabelStatus label={hours + " hours"} state={"info"} /> : ""}
+          {day ? <LabelStatus label={day + " ngày"} state={"info"} /> : ""}
+          {hours ? <LabelStatus label={hours + " giờ"} state={"info"} /> : ""}
           {minute ? (
-            <LabelStatus label={minute + " minute"} state={"info"} />
+            <LabelStatus label={minute + " phút"} state={"info"} />
           ) : (
             ""
           )}
