@@ -101,7 +101,7 @@ function SearchTalen() {
 
     getParam(API['GET_CANDIDATE_FILTER'], fullQuery).then(response => {
       setCandidates(response.data.data)
-      setCount(Math.round(response.data?.data.length / PAGE_SIZE))
+      setCount(Math.ceil(response.data?.data.length / PAGE_SIZE))
     })
 
     if (isButton) {
