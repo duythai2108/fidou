@@ -107,9 +107,8 @@ const SearchJob = () => {
     }
 
     getParam(API['GET_JOB_FILTER'], fullQuery).then(response => {
-      console.log(response.data.data)
       setCandidates(response.data.data)
-      setCount(Math.round(response.data?.data.length / PAGE_SIZE))
+      setCount(Math.ceil(response.data?.data.length / PAGE_SIZE))
     })
   }
 
