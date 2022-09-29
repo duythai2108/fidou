@@ -16,7 +16,7 @@ function TalenCard({ avatarUrl, name, id, demo, provice, rate }) {
 
       <div className="talencard__location">
         <i class="fa fa-map-marker-alt"></i>
-        {provice} City
+        {provice} 
       </div>
       <Rating
         name="read-only"
@@ -43,7 +43,7 @@ function TalenCard({ avatarUrl, name, id, demo, provice, rate }) {
             alignItems: "center",
           }}
         >
-          Chưa có demo nào
+          Ứng viên chưa tải lên bản thử giọng nào
         </div>
       )}
 
