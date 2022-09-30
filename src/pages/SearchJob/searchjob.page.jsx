@@ -359,6 +359,11 @@ const SearchJob = () => {
               />
             )
           })}
+          {!candidates || candidates?.length == 0 ? (
+          <p>Không có công việc nào!</p>
+        ) : (
+          ''
+        )}
 
         {count && (
           <div className="paginationWrapper">

@@ -258,11 +258,11 @@ function MessageDetail({ onRoom }) {
             style={{ marginRight: '10px' }}
             onClick={() => {
               Swal.fire({
-                title: 'Đăng file',
+                title: 'Gửi file ghi âm',
                 showDenyButton: true,
                 html: "<input type='file' id='file-chat'/>",
-                confirmButtonText: 'Save',
-                denyButtonText: `Don't save`
+                confirmButtonText: 'Gửi',
+                denyButtonText: `Hủy`
               }).then(result => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
