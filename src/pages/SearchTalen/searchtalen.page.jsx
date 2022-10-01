@@ -423,14 +423,14 @@ function SearchTalen() {
           </select>
         </div> */}
 
-        {/* <button
+        <button
           className="button"
           onClick={() => {
             search(true);
           }}
         >
           Tìm kiếm
-        </button> */}
+        </button>
       </div>
       <div className="right">
         <h2>Danh sách ứng viên</h2>
