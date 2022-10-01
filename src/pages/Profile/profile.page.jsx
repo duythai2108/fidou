@@ -428,12 +428,11 @@ function Profile() {
 
           <div className="header-info__info">
             <h2>
-              {prepareData.account.name} <i class="fa fa-check-circle"></i>
+              {prepareData.account.name}  <i class="fa fa-check-circle"></i>
             </h2>
             <h4>
               <i class="fa fa-map-marker-alt"></i>{" "}
-              <span>Thành phố {prepareData.account.province}</span>
-              
+              <span>{prepareData.account.provinceName}</span>
             </h4>
           </div>
         </div>
