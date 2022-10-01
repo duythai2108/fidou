@@ -192,6 +192,7 @@ function ProfileMini({ data, isShowInvite }) {
             </option>
             <option value="0">Tiếng Việt</option>
             <option value="1">Tiếng Anh</option>
+            <option value="2">Khác</option>
           </select>
           <h3>
             Giới tính yêu cầu cho ứng viên <span>*</span>
@@ -202,6 +203,7 @@ function ProfileMini({ data, isShowInvite }) {
             </option>
             <option value="0">Nam</option>
             <option value="1">Nữ</option>
+            <option value="2">Khác</option>
           </select>
           <h3>
             Tone <span>*</span>

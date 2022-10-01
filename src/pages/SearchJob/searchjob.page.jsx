@@ -360,7 +360,7 @@ const SearchJob = () => {
             )
           })}
           {!candidates || candidates?.length == 0 ? (
-          <p>Không có công việc nào!</p>
+          <h3>Không có công việc nào!</h3>
         ) : (
           ''
         )}

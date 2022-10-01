@@ -433,6 +433,7 @@ function Profile() {
             <h4>
               <i class="fa fa-map-marker-alt"></i>{" "}
               <span>Thành phố {prepareData.account.province}</span>
+              
             </h4>
           </div>
         </div>
@@ -571,6 +572,7 @@ function Profile() {
                         </option>
                         <option value="0">Tiếng Việt</option>
                         <option value="1">Tiếng Anh</option>
+                        <option value="2">Khác</option>
                         </select>
                     <h3>
                       Giới tính yêu cầu cho ứng viên <span>*</span>
@@ -581,6 +583,7 @@ function Profile() {
                       </option>
                       <option value="0">Nam</option>
                       <option value="1">Nữ</option>
+                      <option value="2">Khác</option>
                     </select>
                     <h3>
                       Tone giọng yêu cầu cho ứng viên <span>*</span>
