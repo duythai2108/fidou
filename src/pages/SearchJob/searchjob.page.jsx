@@ -301,6 +301,7 @@ const SearchJob = () => {
             </option>
             <option value="0">Nam</option>
             <option value="1">Nữ</option>
+            <option value="2">Khác</option>
           </select>
         </div>
 

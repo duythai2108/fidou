@@ -208,7 +208,7 @@ const JobDetail = () => {
                 case 1:
                   return 'Nữ'
                 default:
-                  return 'Không yêu cầu'
+                  return 'Khác'
               }
             })()}
           </p>

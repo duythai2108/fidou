@@ -424,7 +424,7 @@ function Profile() {
               alt=""
             />
           </div>
-
+              
           <div className="header-info__info">
             {prepareData?.account?.name && (
               <h2>

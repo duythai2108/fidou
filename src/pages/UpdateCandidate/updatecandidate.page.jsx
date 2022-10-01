@@ -492,6 +492,9 @@ function UpdateCandidate() {
                 <option value="1" selected={fields.gender == 1}>
                   Nữ
                 </option>
+                <option value="2" selected={fields.gender == 2}>
+                  Khác
+                </option>
               </select>
             </div>
           </Row>
