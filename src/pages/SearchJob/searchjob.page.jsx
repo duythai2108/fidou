@@ -360,7 +360,7 @@ const SearchJob = () => {
             )
           })}
 
-        {count && (
+        {count > 0 && (
           <div className="paginationWrapper">
             <Pagination count={count} page={page} onChange={handleChangePage} />
           </div>
