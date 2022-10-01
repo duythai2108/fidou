@@ -1,141 +1,144 @@
-import { InputNumber, Modal, Radio, Select } from "antd";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
-import { getAuthen, postAuthen, putAuthen } from "../../axios/authenfunction";
-import voice from "../../axios/voice";
-import Comment from "../../components/Comment/comment.component";
-import Demo from "../../components/Demo/demo.component";
-import Job from "../../components/Job/job.component";
-import LabelStatus from "../../components/label-status/label-status.component";
-import API from "../../constans/api";
-import path from "../../constans/path";
-import { AccountContext } from "../../context/AccountProvider";
-import { uploadFile } from "../../Firebase/service";
-import "./profile.style.scss";
+import { InputNumber, Modal, Radio, Select } from 'antd'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import { getAuthen, postAuthen, putAuthen } from '../../axios/authenfunction'
+import voice from '../../axios/voice'
+import Comment from '../../components/Comment/comment.component'
+import Demo from '../../components/Demo/demo.component'
+import Job from '../../components/Job/job.component'
+import LabelStatus from '../../components/label-status/label-status.component'
+import API from '../../constans/api'
+import path from '../../constans/path'
+import { AccountContext } from '../../context/AccountProvider'
+import { uploadFile } from '../../Firebase/service'
+import './profile.style.scss'
+
+import moment from 'moment'
+
 function Profile() {
-  const location = useLocation();
-  const { Option } = Select;
+  const location = useLocation()
+  const { Option } = Select
   let [prepareData, setPrepareData] = useState({
     sub: [],
     demos: [],
     account: [],
-    jobs: [],
-  });
-  let [update, setUpdate] = useState();
-  let { username } = useParams();
-  let headerInfo = useRef(null);
-  let [isSticky, setIsSticky] = useState(false);
-  let [isShowAdd, setIsShowAdd] = useState(false);
-  let [isEditable, setIsEditable] = useState(false);
-  let [isShowAddJob, setIsShowAddJob] = useState(false);
-  let [deleteId, setDeleteId] = useState("");
-  let file = useRef(null);
-  let title = useRef(null);
-  let title2 = useRef(null);
-  const [value, setValue] = useState(1);
-  let day = useRef(null);
-  let hours = useRef(null);
-  let minute = useRef(null);
-  let description2 = useRef(null);
-  let price = useRef(null);
-  let tone = useRef(null);
-  let toneDemo = useRef(null);
-  let minAge = useRef(null);
-  let maxAge = useRef(null);
-  let gender = useRef(null);
-  let language = useRef(null);
+    jobs: []
+  })
+  let [update, setUpdate] = useState()
+  let { username } = useParams()
+  let headerInfo = useRef(null)
+  let [isSticky, setIsSticky] = useState(false)
+  let [isShowAdd, setIsShowAdd] = useState(false)
+  let [isEditable, setIsEditable] = useState(false)
+  let [isShowAddJob, setIsShowAddJob] = useState(false)
+  let [deleteId, setDeleteId] = useState('')
+  let file = useRef(null)
+  let title = useRef(null)
+  let title2 = useRef(null)
+  const [value, setValue] = useState(1)
+  let day = useRef(null)
+  let hours = useRef(null)
+  let minute = useRef(null)
+  let description2 = useRef(null)
+  let price = useRef(null)
+  let tone = useRef(null)
+  let toneDemo = useRef(null)
+  let minAge = useRef(null)
+  let maxAge = useRef(null)
+  let gender = useRef(null)
+  let language = useRef(null)
 
-  const isCompany = location.pathname.includes(path["COMPANY_PAGE"]);
+  const isCompany = location.pathname.includes(path['COMPANY_PAGE'])
 
-  const accountContext = useContext(AccountContext);
-  let { data } = accountContext;
+  const accountContext = useContext(AccountContext)
+  let { data } = accountContext
 
-  const onChange = (e) => {
-    setValue(e.target.value);
-  };
-  let description = useRef(null);
+  const onChange = e => {
+    setValue(e.target.value)
+  }
+  let description = useRef(null)
   const handleScroll = () => {
-    let headerOffset = headerInfo.current?.offsetTop;
-    let pageOffset = window.pageYOffset;
+    let headerOffset = headerInfo.current?.offsetTop
+    let pageOffset = window.pageYOffset
     if (headerOffset && pageOffset > headerOffset) {
-      setIsSticky(true);
+      setIsSticky(true)
     } else {
-      setIsSticky(false);
+      setIsSticky(false)
     }
-  };
+  }
 
   useEffect(() => {
-    console.log(deleteId);
+    console.log(deleteId)
     if (deleteId) {
       prepareData.account.jobs = prepareData.account.jobs.filter(
-        (item) => item.id != deleteId
-      );
-      console.log(prepareData.account.jobs);
-      setPrepareData(prepareData);
-      setDeleteId("");
+        item => item.id != deleteId
+      )
+      console.log(prepareData.account.jobs)
+      setPrepareData(prepareData)
+      setDeleteId('')
     }
-  }, [deleteId]);
+  }, [deleteId])
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    console.log(data)
+  }, [data])
 
   useEffect(() => {
     const fetchDataCadidates = async () => {
       const [sub, accountRequest] = await Promise.all([
-        getAuthen(API["GET_SUBCATEGORY"]),
+        getAuthen(API['GET_SUBCATEGORY']),
         // getAuthen(API["GET_DEMO"], true),
-        getAuthen(API["GET_CANDIDATE_INFO"] + username),
-      ]);
-      console.log(accountRequest);
+        getAuthen(API['GET_CANDIDATE_INFO'] + username)
+      ])
+      console.log(accountRequest)
       setPrepareData({
         sub: sub.data.data,
         // demos: demos.data.data,
-        account: accountRequest.data.data,
-      });
-    };
+        account: accountRequest.data.data
+      })
+    }
 
     const fetchDataEnterprise = async () => {
       const [sub, accountRequest] = await Promise.all([
-        getAuthen(API["GET_SUBCATEGORY"]),
-        getAuthen(API["GET_ENTERPRISE_INFO"] + username),
-      ]);
+        getAuthen(API['GET_SUBCATEGORY']),
+        getAuthen(API['GET_ENTERPRISE_INFO'] + username)
+      ])
       setPrepareData({
         sub: sub.data.data,
-        account: accountRequest.data.data,
-      });
-    };
+        account: accountRequest.data.data
+      })
+    }
 
     if (isCompany) {
-      fetchDataEnterprise();
+      fetchDataEnterprise()
     } else {
-      fetchDataCadidates();
+      fetchDataCadidates()
     }
 
-    let account = JSON.parse(localStorage.getItem("account"));
+    let account = JSON.parse(localStorage.getItem('account'))
     if (account?.id == username) {
-      setIsEditable(true);
+      setIsEditable(true)
     }
-    window.scrollTo(0, 0);
-    handleScroll();
-    window.addEventListener("scroll", (event) => {
-      handleScroll();
-    });
-  }, []);
+    window.scrollTo(0, 0)
+    handleScroll()
+    window.addEventListener('scroll', event => {
+      handleScroll()
+    })
+  }, [])
 
   const handelAddJob = () => {
-    const txtTitle = title2.current.value;
-    const txtDescription = description2.current.value;
-    const txtDay = day.current.value;
-    const txtHours = hours.current.value;
-    const txtMinute = minute.current.value;
-    const txtPrice = price.current.value;
-    const txtTone = tone.current.value;
-    const txtMinAge = minAge.current.value;
-    const txtMaxAge = maxAge.current.value;
-    const txtGender = gender.current.value;
-    const txtLanguage = language.current.value;
+    const txtTitle = title2.current.value
+    const txtDescription = description2.current.value
+    const txtDay = day.current.value
+    const txtHours = hours.current.value
+    const txtMinute = minute.current.value
+    const txtPrice = price.current.value
+    const txtTone = tone.current.value
+    const txtMinAge = minAge.current.value
+    const txtMaxAge = maxAge.current.value
+    const txtGender = gender.current.value
+    const txtLanguage = language.current.value
 
     if (
       !txtTitle ||
@@ -145,25 +148,25 @@ function Profile() {
       !txtTone
     ) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Vui lòng điền đầy đủ thông tin!",
-      });
-      return;
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Vui lòng điền đầy đủ thông tin!'
+      })
+      return
     }
 
     if (Number(txtPrice) <= 0) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Giá tiền phải lớn hơn 0!",
-      });
-      return;
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Giá tiền phải lớn hơn 0!'
+      })
+      return
     }
 
     if (update) {
       putAuthen(
-        API["PUT_JOB"],
+        API['PUT_JOB'],
         {
           id: update,
           name: txtTitle,
@@ -181,10 +184,10 @@ function Profile() {
         },
         true
       )
-        .then((response) => {
-          console.log(response.data.data);
-          setIsShowAddJob(false);
-          Swal.fire("Thông báo", "Cập nhật công việc thành công!", "success");
+        .then(response => {
+          console.log(response.data.data)
+          setIsShowAddJob(false)
+          Swal.fire('Thông báo', 'Cập nhật công việc thành công!', 'success')
           const {
             dayDuration,
             description,
@@ -202,11 +205,11 @@ function Profile() {
             maxAge,
             language,
             gender
-          } = response.data.data;
+          } = response.data.data
           const oldData = prepareData.account.jobs.filter(
-            (item) => item.id == id
-          )[0];
-          const index = prepareData.account.jobs.indexOf(oldData);
+            item => item.id == id
+          )[0]
+          const index = prepareData.account.jobs.indexOf(oldData)
           prepareData.account.jobs[index] = {
             dayDuration,
             description,
@@ -224,23 +227,23 @@ function Profile() {
             maxAge,
             language,
             gender
-          };
-          console.log(prepareData.account.jobs);
+          }
+          console.log(prepareData.account.jobs)
           setPrepareData({
-            ...prepareData,
-          });
+            ...prepareData
+          })
         })
-        .catch((error) => {
-          setIsShowAddJob(false);
+        .catch(error => {
+          setIsShowAddJob(false)
           Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: error.response.data.msg,
-          });
-        });
+            icon: 'error',
+            title: 'Oops...',
+            text: error.response.data.msg
+          })
+        })
     } else {
       postAuthen(
-        API["POST_JOB"],
+        API['POST_JOB'],
         {
           name: txtTitle,
           description: txtDescription,
@@ -257,9 +260,9 @@ function Profile() {
         },
         true
       )
-        .then((response) => {
-          setIsShowAddJob(false);
-          Swal.fire("Thông báo", "Đăng công việc thành công!", "success");
+        .then(response => {
+          setIsShowAddJob(false)
+          Swal.fire('Thông báo', 'Đăng công việc thành công!', 'success')
           const {
             dayDuration,
             description,
@@ -277,7 +280,7 @@ function Profile() {
             maxAge,
             language,
             gender
-          } = response.data.data.transaction.job;
+          } = response.data.data.transaction.job
           prepareData.account.jobs.push({
             dayDuration,
             description,
@@ -295,59 +298,59 @@ function Profile() {
             maxAge,
             language,
             gender
-          });
-          console.log(prepareData.account.jobs);
+          })
+          console.log(prepareData.account.jobs)
           setPrepareData({
-            ...prepareData,
-          });
+            ...prepareData
+          })
         })
-        .catch((error) => {
-          setIsShowAddJob(false);
+        .catch(error => {
+          setIsShowAddJob(false)
           Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: error.response.data.msg,
-          });
-        });
+            icon: 'error',
+            title: 'Oops...',
+            text: error.response.data.msg
+          })
+        })
     }
-  };
+  }
 
   const handelCreateDemo = () => {
-    if (file.current.files[0].type == "audio/mpeg") {
-      const txtfile = file.current.files[0];
-      const txtTitle = title.current.value;
-      const txtDescription = description.current.value;
-      const txtTone = toneDemo.current.value;
+    if (file.current.files[0].type == 'audio/mpeg') {
+      const txtfile = file.current.files[0]
+      const txtTitle = title.current.value
+      const txtDescription = description.current.value
+      const txtTone = toneDemo.current.value
       const url = uploadFile(
         txtfile,
         txtTitle + new Date().toDateString,
-        "audio/mpeg"
-      );
+        'audio/mpeg'
+      )
 
       url
-        .then((response) => {
-          let url = response;
+        .then(response => {
+          let url = response
           voice
-            .post("/transcript", {
-              audio_url: url,
+            .post('/transcript', {
+              audio_url: url
             })
-            .then((response) => {
-              let status = "queued";
-              let script = "";
+            .then(response => {
+              let status = 'queued'
+              let script = ''
               const interval = setInterval(() => {
-                if (status != "completed") {
+                if (status != 'completed') {
                   voice
                     .get(`/transcript/${response.data.id}`)
-                    .then((response) => {
-                      status = response.data.status;
-                      if (status == "completed") {
-                        script = response.data.text;
+                    .then(response => {
+                      status = response.data.status
+                      if (status == 'completed') {
+                        script = response.data.text
                       }
-                    });
+                    })
                 } else {
-                  clearInterval(interval);
+                  clearInterval(interval)
                   postAuthen(
-                    API["POST_DEMO"],
+                    API['POST_DEMO'],
                     {
                       title: txtTitle,
                       description: txtDescription,
@@ -355,11 +358,11 @@ function Profile() {
                       subCategoryId: value,
                       tone: Number(txtTone),
                       textTranscript:
-                        script.length > 0 ? script : "script trống!",
+                        script.length > 0 ? script : 'script trống!'
                     },
                     true
                   )
-                    .then((response) => {
+                    .then(response => {
                       const {
                         candidateId,
                         description,
@@ -368,8 +371,8 @@ function Profile() {
                         title,
                         tone,
                         url,
-                        textTranscript,
-                      } = response.data.data;
+                        textTranscript
+                      } = response.data.data
                       prepareData.account.voiceDemos.push({
                         candidateId: candidateId,
                         description: description,
@@ -378,41 +381,37 @@ function Profile() {
                         textTranscript: textTranscript,
                         title: title,
                         tone: tone,
-                        url: url,
-                      });
-                      Swal.fire(
-                        "Thông báo",
-                        "Đăng demo thành công!",
-                        "success"
-                      );
-                      setIsShowAdd(false);
+                        url: url
+                      })
+                      Swal.fire('Thông báo', 'Đăng demo thành công!', 'success')
+                      setIsShowAdd(false)
                       setPrepareData({
-                        ...prepareData,
-                      });
+                        ...prepareData
+                      })
                     })
-                    .catch();
+                    .catch()
                 }
-              }, 1000);
+              }, 1000)
             })
-            .catch();
+            .catch()
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch(error => {
+          console.log(error)
+        })
     } else {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Chỉ áp dụng cho file audio!",
-      });
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Chỉ áp dụng cho file audio!'
+      })
     }
-  };
+  }
 
   return (
     <div className="profile">
       <div
         ref={headerInfo}
-        className={`header-info ${isSticky ? "sticky" : ""}`}
+        className={`header-info ${isSticky ? 'sticky' : ''}`}
       >
         <div className="row">
           <div className="header-info__avatar">
@@ -427,11 +426,16 @@ function Profile() {
           </div>
 
           <div className="header-info__info">
-            <h2>
-              {prepareData.account.name} ({prepareData.account.dob} tuổi)  <i class="fa fa-check-circle"></i>
-            </h2>
+            {prepareData?.account?.name && (
+              <h2>
+                {prepareData.account.name} (
+                {moment().diff(prepareData.account.dob, 'years')} tuổi){' '}
+                <i class="fa fa-check-circle"></i>
+              </h2>
+            )}
+
             <h4>
-              <i class="fa fa-map-marker-alt"></i>{" "}
+              <i class="fa fa-map-marker-alt"></i>{' '}
               <span>{prepareData.account.provinceName}</span>
             </h4>
           </div>
@@ -442,7 +446,7 @@ function Profile() {
               <div>
                 <button
                   onClick={() => {
-                    setIsShowAdd(true);
+                    setIsShowAdd(true)
                   }}
                 >
                   Thêm bản ghi âm
@@ -470,13 +474,13 @@ function Profile() {
                                   <Radio value={item.id} key={index}>
                                     {item.name}
                                   </Radio>
-                                );
+                                )
                               })
-                            : ""}
+                            : ''}
                         </Radio.Group>
                       </div>
                     ) : (
-                      ""
+                      ''
                     )}
                   </div>
 
@@ -527,7 +531,7 @@ function Profile() {
               <div>
                 <button
                   onClick={() => {
-                    setIsShowAddJob(true);
+                    setIsShowAddJob(true)
                   }}
                 >
                   Thêm công việc
@@ -538,8 +542,8 @@ function Profile() {
                   visible={isShowAddJob}
                   onOk={handelAddJob}
                   onCancel={() => {
-                    setUpdate();
-                    setIsShowAddJob(false);
+                    setUpdate()
+                    setIsShowAddJob(false)
                   }}
                   width={800}
                   className="modal-adddemo"
@@ -557,22 +561,22 @@ function Profile() {
                                 <Radio value={item.id} key={index}>
                                   {item.name}
                                 </Radio>
-                              );
+                              )
                             })
-                          : ""}
+                          : ''}
                       </Radio.Group>
                     </div>
-                      <h3>
-                          Ngôn ngữ yêu cầu cho ứng viên <span>*</span>
-                      </h3>
-                      <select ref={language}>
-                        <option disabled selected value>
-                            -- Chọn --
-                        </option>
-                        <option value="0">Tiếng Việt</option>
-                        <option value="1">Tiếng Anh</option>
-                        <option value="2">Khác</option>
-                        </select>
+                    <h3>
+                      Ngôn ngữ yêu cầu cho ứng viên <span>*</span>
+                    </h3>
+                    <select ref={language}>
+                      <option disabled selected value>
+                        -- Chọn --
+                      </option>
+                      <option value="0">Tiếng Việt</option>
+                      <option value="1">Tiếng Anh</option>
+                      <option value="2">Khác</option>
+                    </select>
                     <h3>
                       Giới tính yêu cầu cho ứng viên <span>*</span>
                     </h3>
@@ -597,10 +601,13 @@ function Profile() {
                     </select>
                   </div>
                   <div className="box">
-                      <div className="row">
-                        <h3>Độ tuổi <span>*</span></h3>
-                        <input type="number" ref={minAge}/> -  <input type="number" ref={maxAge}/>
-                      </div>
+                    <div className="row">
+                      <h3>
+                        Độ tuổi <span>*</span>
+                      </h3>
+                      <input type="number" ref={minAge} /> -{' '}
+                      <input type="number" ref={maxAge} />
+                    </div>
                   </div>
                   <div className="modal-adddemo__description box">
                     <h3>
@@ -616,7 +623,7 @@ function Profile() {
                     </p>
                     <input type="text" ref={description2} />
                   </div>
-                            
+
                   <div className="box">
                     <div className="row">
                       <h3>
@@ -649,7 +656,7 @@ function Profile() {
           ) : data.account?.id == 1 && isCompany ? (
             <button>Mời vào việc</button>
           ) : (
-            ""
+            ''
           )}
         </div>
       </div>
@@ -663,8 +670,8 @@ function Profile() {
                 {prepareData.account.jobs &&
                 prepareData.account.jobs?.length > 0 ? (
                   prepareData.account.jobs.map((item, index) => {
-                    console.clear();
-                    console.log(item);
+                    console.clear()
+                    console.log(item)
                     return (
                       <Job
                         title={item.name}
@@ -697,10 +704,10 @@ function Profile() {
                           maxAge,
                           language,
                           gender,
-                          setValue,
+                          setValue
                         }}
                       />
-                    );
+                    )
                   })
                 ) : (
                   <h6>Hiện tại {prepareData.account.name} chưa có job nào</h6>
@@ -722,7 +729,7 @@ function Profile() {
                       tone={item.tone}
                       script={item.textTranscript}
                     />
-                  );
+                  )
                 })
               ) : (
                 <h6>Hiện tại {prepareData.account.name} chưa có demo nào</h6>
@@ -736,7 +743,7 @@ function Profile() {
               <i class="fa fa-user-clock"></i>
               <strong>Kĩ năng:</strong> <br />
               {prepareData.account?.subCategorieNames?.map((item, index) => {
-                return <LabelStatus label={item} state={"info"} />;
+                return <LabelStatus label={item} state={'info'} />
               })}
             </div>
           </div>
@@ -748,15 +755,15 @@ function Profile() {
           {prepareData.account?.reviews ? (
             <div className="comment-list aaaa">
               <h3>Đánh giá của nhà tuyển dụng</h3>
-              {prepareData.account?.reviews?.map((item) => {
-                const date = new Date(item.createdTime).toLocaleDateString();
-                return (                
-                  <Comment                
+              {prepareData.account?.reviews?.map(item => {
+                const date = new Date(item.createdTime).toLocaleDateString()
+                return (
+                  <Comment
                     date={date}
                     value={item.reviewPoint}
                     content={item.content}
                   />
-                );
+                )
               })}
             </div>
           ) : (
@@ -765,7 +772,7 @@ function Profile() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Profile;
+export default Profile
