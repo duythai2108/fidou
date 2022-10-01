@@ -428,7 +428,7 @@ function Profile() {
 
           <div className="header-info__info">
             <h2>
-              {prepareData.account.name}  <i class="fa fa-check-circle"></i>
+              {prepareData.account.name} ({prepareData.account.dob} tuổi)  <i class="fa fa-check-circle"></i>
             </h2>
             <h4>
               <i class="fa fa-map-marker-alt"></i>{" "}
