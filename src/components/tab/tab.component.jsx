@@ -164,11 +164,11 @@ export default function BasicTabs({ listOrder }) {
             );
           }
         })}
-        {listOrder.filter((item) => item.jobStatus == 0).length == 0 ? (
+        {/* {listOrder.filter((item) => item.jobStatus == 0).length == 0 ? (
           <p>Danh sách hiện đang trống</p>
         ) : (
           ""
-        )}
+        )} */}
       </TabPanel>
       <TabPanel value={value} index={1}>
         {listOrder?.map((item, index) => {
@@ -206,12 +206,12 @@ export default function BasicTabs({ listOrder }) {
             );
           }
         })}
-        {listOrder.filter((item) => item.jobStatus == 1 && item.jobStatus)
+        {/* {listOrder.filter((item) => item.jobStatus == 1 && item.jobStatus)
           .length == 0 ? (
           <p>Danh sách hiện đang trống</p>
         ) : (
           ""
-        )}
+        )} */}
       </TabPanel>
       <TabPanel value={value} index={2}>
         {listOrder?.map((item, index) => {
@@ -254,12 +254,12 @@ export default function BasicTabs({ listOrder }) {
             );
           }
         })}
-        {listOrder.filter((item) => item.jobStatus == 2 && item.status == 2)
-          .length == 0 ? (
+        {/* {listOrder.filter((item) => item.jobStatus == 2 )
+           ? (
           <p>Danh sách hiện đang trống</p>
         ) : (
           ""
-        )}
+        )} */}
       </TabPanel>
     </Box>
   );
